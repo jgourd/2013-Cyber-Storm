@@ -1,0 +1,65 @@
+<VirtualHost *:1337>
+	ServerAdmin cyberstorm@cyberstorm
+	ServerName cyberstorm
+	ServerAlias cyberstorm
+	DocumentRoot /home/jgourd/_git/school/teaching/Spring2013/cyberstorm/2013-Cyber-Storm/portals
+	ErrorLog /var/log/apache2/cyberstorm-error.log
+	CustomLog /var/log/apache2/cyberstorm-access.log combined
+
+	<Directory "/home/jgourd/_git/school/teaching/Spring2013/cyberstorm/2013-Cyber-Storm/portals">
+		SSLRequireSSL
+		Options Indexes FollowSymLinks
+		AllowOverride AuthConfig Limit
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	SSLEngine on
+	SSLProtocol all -SSLv2
+	SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+	SSLCertificateFile /etc/apache2/ssl/cyberstorm.crt
+	SSLCertificateKeyFile /etc/apache2/ssl/cyberstorm.key
+
+	<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+		SSLOptions +StdEnvVars
+	</Files>
+
+	<Directory "/var/www/cgi-bin">
+		SSLOptions +StdEnvVars
+	</Directory>
+
+	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+</VirtualHost>
+
+<VirtualHost *:31337>
+	ServerAdmin cyberstorm@cyberstorm
+	ServerName cyberstorm
+	ServerAlias cyberstorm
+	DocumentRoot /home/jgourd/_git/school/teaching/Spring2013/cyberstorm/2013-Cyber-Storm/portals
+	ErrorLog /var/log/apache2/cyberstorm-error.log
+	CustomLog /var/log/apache2/cyberstorm-access.log combined
+
+	<Directory "/home/jgourd/_git/school/teaching/Spring2013/cyberstorm/2013-Cyber-Storm/portals">
+		SSLRequireSSL
+		Options Indexes FollowSymLinks
+		AllowOverride AuthConfig Limit
+		Order allow,deny
+		Allow from all
+	</Directory>
+
+	SSLEngine on
+	SSLProtocol all -SSLv2
+	SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+	SSLCertificateFile /etc/apache2/ssl/cyberstorm.crt
+	SSLCertificateKeyFile /etc/apache2/ssl/cyberstorm.key
+
+	<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+		SSLOptions +StdEnvVars
+	</Files>
+
+	<Directory "/var/www/cgi-bin">
+		SSLOptions +StdEnvVars
+	</Directory>
+
+	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force-response-1.0
+</VirtualHost>

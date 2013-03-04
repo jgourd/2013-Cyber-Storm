@@ -1,0 +1,46 @@
+*configuration
+
+enable
+configure
+
+username cyberstorm password <password> level 15
+
+interface vlan 1
+no ip address
+ip address 10.0.0.254 255.255.0.0
+
+no ip http server
+no ip https server
+no ip ssh server
+ip telnet server
+
+bridge aging-time 60
+
+interface range ethernet all
+spanning-tree portfast
+
+end
+
+--
+
+*save configuration
+
+copy running-config startup-config
+
+--
+
+*show macs
+
+show bridge address-table
+
+*or
+
+(echo admin; echo show bridge address-table; sleep 5; echo exit) | telnet 10.0.0.2 | awk '/:/ {print $2}'
+
+--
+
+*to restore factory configuration
+
+del start
+reload
+

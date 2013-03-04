@@ -1,0 +1,5 @@
+2013-Cyber-Storm
+================
+config/		database (and other) configuration
+nodes/		node detection
+portals/	team portals (and acls)

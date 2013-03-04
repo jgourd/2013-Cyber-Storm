@@ -1,0 +1,7 @@
+2013-Cyber-Storm
+================
+apache/		apache configuration files
+config.php	database configuration
+cyberstorm.sql	mysqldump of the database
+db.php		database helper functions
+db_dump		dumps database (via mysqldump)

@@ -1,0 +1,9 @@
+2013-Cyber-Storm
+================
+cyberstorm		apache configuration for the portals; place in /etc/apache2/sites-available and link to /etc/apache2/sites-enabled
+cyberstorm.crt		apache https certificate
+cyberstorm.csr		apache https certificate request
+cyberstorm.key		apache https public key
+cyberstorm.key.secure	apache https private key
+gen_cert		generates site certificates
+ports.conf		apache port configuration for the portals; place in /etc/apache2

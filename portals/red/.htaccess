@@ -1,0 +1,4 @@
+AuthUserFile /home/jgourd/_git/school/teaching/Spring2013/cyberstorm/2013-Cyber-Storm/portals/acl/.htpasswd
+AuthName "RED (LulzSec)"
+AuthType Basic
+Require user red

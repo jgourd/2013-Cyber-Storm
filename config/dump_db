@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 dump_file.sql"
+	exit
+fi
+
+mysqldump -uroot -proot --skip-extended-insert --add-drop-database --add-drop-table --databases cyberstorm > "$1"

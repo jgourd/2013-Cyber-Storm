@@ -1,0 +1,37 @@
+#!/bin/bash
+
+if [ `whoami` != "root" ]; then
+	echo "You must be root."
+	exit
+fi
+
+if [ -z "$1" ]; then
+	echo "Usage: $0 <domain name>"
+	exit
+fi
+
+domain=$1
+
+#generate the key
+echo "*-Generating key..."
+openssl genrsa -des3 -out $domain.key 4096
+#generate a certificate signing request (csr) with the key
+echo "*-Generating csr..."
+openssl req -new -key $domain.key -out $domain.csr
+#sign the csr (to last 9999 days)
+echo "*-Signing csr..."
+openssl x509 -req -days 9999 -in $domain.csr -signkey $domain.key -out $domain.crt
+#make a passwordless version of the key
+echo "*-Generating passwordless key..."
+openssl rsa -in $domain.key -out $domain.key.insecure
+mv $domain.key $domain.key.secure 
+mv $domain.key.insecure $domain.key
+#set permissions
+echo "*-Setting permissions..."
+chmod 600 $domain.*
+#move files to proper folder
+echo "*-Moving files..."
+mv $domain.key $domain.crt /etc/apache2/ssl/
+#restart apache
+echo "*-Restarting apache..."
+/etc/init.d/apache2 restart
