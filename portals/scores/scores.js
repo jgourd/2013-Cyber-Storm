@@ -1,10 +1,20 @@
-var NUM_TEAMS = 6;
+var NUM_TEAMS;
 var UPDATE_INTERVAL = 10000;
 var DIGIT_INTERVAL = 10;
 var SCORE_INCREMENT = 10;
 
 jQuery(document).ready(function()
 {
+	$.ajax(
+	{
+		url: "get_teams.php",
+		type: "POST",
+		success: function(data)
+		{
+			NUM_TEAMS = data;
+		}
+	});
+
 	refresh = function()
 	{
 		$.ajax(

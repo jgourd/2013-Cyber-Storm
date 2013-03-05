@@ -6,7 +6,7 @@
 	$scores = "";
 	$challenges = "";
 
-	$r = db_query("SELECT score,challenges FROM teams;");
+	$r = db_query("SELECT score,challenges FROM teams WHERE enabled='Y';");
 	for ($i=0; $i<mysql_numrows($r); $i++)
 	{
 		if ($i > 0)

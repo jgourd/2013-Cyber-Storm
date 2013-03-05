@@ -2,9 +2,10 @@
 ================
 AGENCYB.TTF	scores font (bold)
 AGENCYR.TTF	scores font (regular)
-custom.css	stylesheet for scores
-custom.js	scripts for scores
 get_scores.php	gets scores and challenges from the database
+get_teams.php	gets team count
 random_scores	generates random scores and challenges
+scores.css	stylesheet for scores
+scores.js	scripts for scores
 scores.php	frontend for scores
 zero_scores	zeroes out scores and challenges
