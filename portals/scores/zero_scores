@@ -1,0 +1,3 @@
+#!/bin/bash
+
+mysql -uroot -proot cyberstorm -e "update teams set score=0,challenges=0;"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+while ((1)); do
+	mysql -uroot -proot cyberstorm -e "update teams set score=(select floor(-500+rand()*(5000+500))); update teams set challenges=(select floor(0+rand()*(50)));"
+	sleep 10s
+done
