@@ -2,6 +2,7 @@
 ================
 AGENCYB.TTF	scores font (bold)
 AGENCYR.TTF	scores font (regular)
+config/		database configuration for the scores portal
 get_scores.php	gets scores and challenges from the database
 get_teams.php	gets team count
 images/		contains images for the scores portal

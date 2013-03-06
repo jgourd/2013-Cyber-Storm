@@ -1,7 +1,7 @@
 <?php
 	$MAX_TEAMS = 6;
 
-	require_once "../../config/db.php";
+	require_once "config/db.php";
 
 	db_connect();
 
