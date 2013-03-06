@@ -4,6 +4,7 @@ AGENCYB.TTF	scores font (bold)
 AGENCYR.TTF	scores font (regular)
 get_scores.php	gets scores and challenges from the database
 get_teams.php	gets team count
+images/		contains images for the scores portal
 random_scores	generates random scores and challenges
 scores.css	stylesheet for scores
 scores.js	scripts for scores
