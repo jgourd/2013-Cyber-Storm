@@ -11,7 +11,7 @@
 		<a href="?wish=add_challenge">Add a challenge</a><br/>
 		<a href="?wish=close_challenge">Close a challenge</a><br/>
 		<a href="?wish=add_announcement">Add an announcement</a><br/>
-		<a href="?wish=toggle_bb">Toggle black box enabled status</a><br/>
+<!--		<a href="?wish=toggle_bb">Toggle black box enabled status</a><br/>-->
 		<hr/>
 
 <?php
@@ -115,7 +115,7 @@
 						echo "Incomplete challenge<p/>\n";
 					else
 					{
-						$r = db_query("INSERT INTO challenges VALUES (NULL, '" . $_POST["name"] . "', '" . $_POST["description"] . "', " . $_POST["points"] . ", NULL, '')");
+						$r = db_query("INSERT INTO challenges VALUES (NULL, '" . $_POST["name"] . "', '" . $_POST["description"] . "', " . $_POST["points"] . ", NULL, NULL)");
 						if ($r)
 							echo "Challenge added successfully.<p/>\n";
 						else
@@ -184,7 +184,7 @@
 					echo "<td><b>$field</b></td>";
 				}
 				echo "<td><b>close</b></td><td><b>winner</b></td></tr>\n";
-				$rows = db_query("SELECT id,name,description,points,timestamp_start FROM challenges WHERE winner_id=0");
+				$rows = db_query("SELECT id,name,description,points,timestamp_start FROM challenges WHERE winner_id IS NULL");
 				for ($i=0; $i<mysql_numrows($rows); $i++)
 				{
 					echo "<tr>";
@@ -194,11 +194,11 @@
 					$id = mysql_result($rows, $i, "id");
 					echo "<td><input type=\"checkbox\" name=\"close$id\"/></td>";
 					echo "<td><select name=\"winner$id\">";
-					$t = db_query("SELECT id,name,description FROM teams WHERE enabled='Y'");
+					$t = db_query("SELECT id,name,color FROM teams WHERE enabled='Y'");
 					for ($j=0; $j<mysql_numrows($t); $j++)
 					{
 						$id = mysql_result($t, $j, "id");
-						echo "<option value=\"$id\">" . mysql_result($t, $j, "name") . " (" . mysql_result($t, $j, "description") . ")</option>";
+						echo "<option value=\"$id\">" . mysql_result($t, $j, "name") . " (" . mysql_result($t, $j, "color") . ")</option>";
 					}
 					echo "</select>";
 					echo "</tr>\n";

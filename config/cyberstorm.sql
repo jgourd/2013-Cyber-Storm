@@ -121,7 +121,7 @@ CREATE TABLE `challenges` (
   `description` varchar(250) NOT NULL DEFAULT '',
   `points` smallint(5) unsigned NOT NULL DEFAULT '0',
   `timestamp_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `winner_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `winner_id` smallint(5) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `challenges_winner_id` (`winner_id`),
   CONSTRAINT `challenges_winner_id` FOREIGN KEY (`winner_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -332,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-05 20:20:42
+-- Dump completed on 2013-03-05 22:47:25
