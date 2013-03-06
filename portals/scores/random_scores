@@ -3,6 +3,6 @@
 secs=5
 
 while ((1)); do
-	mysql -uroot -proot cyberstorm -e "update teams set score=(select floor(-500+rand()*(5000+500))); update teams set challenges=(select floor(0+rand()*(50)));"
+	mysql -ucyberstorm -pcyberstorm cyberstorm -e "update teams set score=(select floor(-500+rand()*(5000+500))); update teams set challenges=(select floor(0+rand()*(50)));"
 	sleep $secs
 done

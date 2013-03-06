@@ -5,4 +5,4 @@ if [ -z "$1" ]; then
 	exit
 fi
 
-mysqldump -uroot -proot --skip-extended-insert --add-drop-database --add-drop-table --databases cyberstorm > "$1"
+mysqldump -ucyberstorm -pcyberstorm --skip-extended-insert --add-drop-database --add-drop-table --databases cyberstorm > "$1"
