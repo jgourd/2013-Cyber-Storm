@@ -272,14 +272,14 @@ DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `description` enum('','WHITE','RED','BLUE','BLACKOPS','SPECTATOR') NOT NULL DEFAULT '',
+  `color` enum('','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') NOT NULL DEFAULT '',
   `subnet` varchar(15) NOT NULL DEFAULT '',
   `sentinel` varchar(250) NOT NULL DEFAULT '',
   `score` smallint(10) NOT NULL DEFAULT '0',
   `challenges` smallint(5) unsigned NOT NULL DEFAULT '0',
   `enabled` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,12 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'FBI','WHITE','10.0','',0,0,'N');
+INSERT INTO `teams` VALUES (1,'Anonymous','RED','10.0','',0,0,'Y');
+INSERT INTO `teams` VALUES (2,'LulzSec','BLUE','10.1','',0,0,'Y');
+INSERT INTO `teams` VALUES (3,'Milw0rm','GREEN','10.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (4,'P.H.I.R.M.','YELLOW','10.3','',0,0,'Y');
+INSERT INTO `teams` VALUES (5,'L0pht','PURPLE','10.4','',0,0,'Y');
+INSERT INTO `teams` VALUES (6,'NullCrew','ORANGE','10.5','',0,0,'Y');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-03 17:33:51
+-- Dump completed on 2013-03-05 20:20:42

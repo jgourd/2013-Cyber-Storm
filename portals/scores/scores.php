@@ -29,17 +29,18 @@
 		for ($w=1; $w<=$width; $w++)
 		{
 			$id = ($h - 1) * $width + $w;
-			$r = db_query("SELECT challenges,name,score FROM teams WHERE enabled='Y' LIMIT " . ($id - 1) . ",1");
+			$r = db_query("SELECT color,challenges,name,score FROM teams WHERE enabled='Y' ORDER BY id LIMIT " . ($id - 1) . ",1");
+			$color = mysql_result($r, 0, "color");
 			$challenges = mysql_result($r, 0, "challenges");
 			$team_name = mysql_result($r, 0, "name");
 			$score = mysql_result($r, 0, "score");
 
 			if ($id <= $num_teams)
 			{
-				echo "\t\t\t<div id=\"team\" class=\"team" . ($id) . "\">\n";
-				echo "\t\t\t\t<div id=\"challenge\" class=\"challenge" . ($id) . "\">$challenges</div>\n";
-				echo "\t\t\t\t<div id=\"name\" class=\"team" . ($id) . "\">$team_name</div>\n";
-				echo "\t\t\t\t<div id=\"score\" class=\"score" . ($id) . "\">$score</div>\n";
+				echo "\t\t\t<div id=\"team\" class=\"" . strtolower($color) . "\">\n";
+				echo "\t\t\t\t<div id=\"challenge\" class=\"challenge$id\">$challenges</div>\n";
+				echo "\t\t\t\t<div id=\"name\" class=\"" . strtolower($color) . "\">$team_name</div>\n";
+				echo "\t\t\t\t<div id=\"score\" class=\"score$id\">$score</div>\n";
 				echo "\t\t\t</div>\n";
 			}
 		}
