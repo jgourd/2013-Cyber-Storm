@@ -5,3 +5,4 @@ config.php	database configuration (*note that the user cyberstorm with password 
 cyberstorm.sql	mysqldump of the database
 db.php		database helper functions
 db_dump		dumps database (via mysqldump)
+mysql_init.sql	initializes the cyberstorm user in MySQL
