@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.67, for debian-linux-gnu (i486)
 --
 -- Host: localhost    Database: cyberstorm
 -- ------------------------------------------------------
--- Server version	5.5.29-0ubuntu0.12.04.1
+-- Server version	5.1.67-0ubuntu0.10.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -135,6 +135,33 @@ CREATE TABLE `challenges` (
 LOCK TABLES `challenges` WRITE;
 /*!40000 ALTER TABLE `challenges` DISABLE KEYS */;
 /*!40000 ALTER TABLE `challenges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ips`
+--
+
+DROP TABLE IF EXISTS `ips`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ips` (
+  `id` smallint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `team_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `ips_team_id` (`team_id`),
+  CONSTRAINT `ips_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ips`
+--
+
+LOCK TABLES `ips` WRITE;
+/*!40000 ALTER TABLE `ips` DISABLE KEYS */;
+INSERT INTO `ips` VALUES (1,'127.0.0.1',4);
+/*!40000 ALTER TABLE `ips` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -324,33 +351,6 @@ INSERT INTO `vms` VALUES (1,'OWASP1','0.30','Y');
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Table structure for table `ips`
---
-
-DROP TABLE IF EXISTS `ips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ips` (
-  `id` smallint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `ip` varchar(15) NOT NULL DEFAULT '',
-  `team_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `ips_team_id` (`team_id`),
-  CONSTRAINT `ips_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ips`
---
-
-LOCK TABLES `ips` WRITE;
-/*!40000 ALTER TABLE `ips` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ips` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -359,4 +359,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-05 22:47:25
+-- Dump completed on 2013-03-07  9:08:45
