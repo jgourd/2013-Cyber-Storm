@@ -2,4 +2,5 @@
 ================
 config/		database (and other) configuration
 nodes/		node detection
+notes		a few notes about this year's version of Cyber Storm
 portals/	team portals (and acls)

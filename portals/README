@@ -3,7 +3,10 @@
 access/			access portal
 acl/			access control lists for portals
 admin/			admin portal
+AGENCYB.TTF	scores font (bold)
+AGENCYR.TTF	scores font (regular)
 ip/			ip portal
 jquery-1.9.1.min.js	jQuery library
 key			router ssh key
+old/			old access portals
 scores/			scores portal

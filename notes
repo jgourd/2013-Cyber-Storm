@@ -1,21 +1,31 @@
 ip portal
-	switch ip constant
-	one ip to setup one machine
-	then request ips
-	can request 1 or up to 256
-	everyone in 10.0.0.0/8 subnet
+	switch ips are constant and setup by white
+	one ip per team is initially allocated to setup one machine
+	then each team can request ips via the ip portal
+	can request 1 to 256 ips
+	everyone is in the 10.0.0.0/8 subnet
 	packets with ips not assigned are dropped and points taken away from team
+	no team subnets means that teams have no idea where IPs are coming from (and so they really can't setup a firewall)
 
 attacks
-	visualization will pulse all nodes in an attack
+	visualization will "pulse" all nodes in an attack
+	pulses may be a change in the node's opacity with a change in its border color (and may even include some sort of halo around it)
 	some will randomly animate to the center and circle each other while pulsing
-	assume any team traffic is attack unless it's from/to white
-	use tcpdump
-	disable attacks in db
-	add new attacks in db (enabled)
-	visualization removes all animated nodes in the center
-	then unpulses all nodes no longer in an attack
-	all nodes in new attacks are pulsed
-	some are randomly animated to the center
+	no attack/attacker icon since it is conceivable that two associated nodes are attacking each other
+	assume any inter-team traffic is attack unless it's from/to white
+	use tcpdump to grab traffic and src/dest IPs/MACs (use -e option in tcpdump)
+	disable all existing attacks in db
+	add new attacks in db (as enabled)
+	sa (situational awareness) portal first pulls alls enabled attacks
+	then it removes all animated nodes in the center (animates them back to their teams)
+	then it "unpulses" all the nodes no longer involved in an attack
+	then it "pulses" all nodes in an attack
+	finally some are randomly selected to animate to the center (same behavior as before)
 
-
+nodes
+	simply poll each switch to see the connected MACs
+	since each switch is known and is associated with a team, we can map MACs to teams
+	record discover time and timeout time
+	nodes portal first pulls all nodes without a timeout time and their associated team
+	then it removes all existing nodes not in the list
+	finally it adds new nodes in the list

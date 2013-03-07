@@ -1,10 +1,8 @@
 2013-Cyber-Storm
 ================
-AGENCYB.TTF	scores font (bold)
-AGENCYR.TTF	scores font (regular)
 config/		database configuration for the scores portal
 get_scores.php	gets scores and challenges from the database
-get_teams.php	gets team count
+get_teams.php	gets team count from the database
 images/		contains images for the scores portal
 random_scores	generates random scores and challenges
 scores.css	stylesheet for the scores portal
