@@ -8,6 +8,7 @@
 	echo <<< END
 <html>
 	<head>
+		<title>2013 Cyber Storm IP Portal</title>
 		<link rel="stylesheet" type="text/css" href="ip.css" />
 	</head>
 
@@ -22,7 +23,7 @@ END;
 		$color = strtolower(mysql_result($r, 0, "color"));
 
 		echo "\t<body class=\"$color\">\n";
-		echo "\t\tIP Portal<p/>\n\n";
+		echo "\t\t<h2>IP Portal</h2>\n\n";
 		echo "\t\tYour current IP address: $ip<br/>\n";
 		echo "\t\tYour team: $team<p/>\n\n";
 		

@@ -11,6 +11,7 @@
 
 <html>
 	<head>
+		<title>2013 Cyber Storm Scores Portal</title>
 		<script type="text/javascript" src="../jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="scores.js"></script>
 		<link rel="stylesheet" type="text/css" href="scores.css" />

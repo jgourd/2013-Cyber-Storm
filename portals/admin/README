@@ -1,4 +1,6 @@
 2013-Cyber-Storm
 ================
+admin.css	stylesheet for the admin portal
+admin.php	frontend for the admin portal
+config/		database configuration for the admin portal
 .htaccess	acl
-index.php	admin portal

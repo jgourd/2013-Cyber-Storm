@@ -1,0 +1,38 @@
+body
+{
+	height: 100%;
+	font-family: agency fb;
+	font-weight: bold;
+	font-size: 36pt;
+/*	color: #a4a4a4;
+        text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;*/
+	color: black;
+	background: #affff9; /* Old browsers */
+	background: url("images/white.gif") no-repeat right, -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #3f0001 100%) fixed; /* FF3.6+ */
+	background: url("images/white.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#3f0001)) fixed; /* Chrome,Safari4+ */
+	background: url("images/white.gif") no-repeat right, -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/white.gif") no-repeat right, -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Opera 11.10+ */
+	background: url("images/white.gif") no-repeat right, -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* IE10+ */
+	background: url("images/white.gif") no-repeat right, linear-gradient(to bottom, #ffffff 0%,#dedede 44%,#a4a4a4 100%) fixed; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#3f0001',GradientType=0 ) fixed; /* IE6-9 */
+	background-size: 20%;
+}
+
+a:link
+{
+	color: gray;
+}
+
+a:hover
+{
+	color: white;
+}
+
+table, td, tr, input, select
+{
+	font-family: inherit;
+	font-weight: normal;
+	font-size: 22pt;
+	text-shadow: none;
+	color: black;
+}
