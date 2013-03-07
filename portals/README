@@ -1,10 +1,9 @@
 2013-Cyber-Storm
 ================
+access/			access portal
 acl/			access control lists for portals
 admin/			admin portal
-blue/			blue portal
 ip/			ip portal
 jquery-1.9.1.min.js	jQuery library
 key			router ssh key
-red/			red portal
 scores/			scores portal

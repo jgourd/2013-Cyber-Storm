@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.67, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: cyberstorm
 -- ------------------------------------------------------
--- Server version	5.1.67-0ubuntu0.10.04.1
+-- Server version	5.5.29-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,6 +24,32 @@
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `cyberstorm` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 USE `cyberstorm`;
+
+--
+-- Table structure for table `acl`
+--
+
+DROP TABLE IF EXISTS `acl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acl` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `team_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `password` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `acl_team_id` (`team_id`),
+  CONSTRAINT `acl_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acl`
+--
+
+LOCK TABLES `acl` WRITE;
+/*!40000 ALTER TABLE `acl` DISABLE KEYS */;
+/*!40000 ALTER TABLE `acl` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `announcements`
@@ -359,4 +385,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-07  9:08:45
+-- Dump completed on 2013-03-07 14:55:51

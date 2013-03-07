@@ -1,0 +1,21 @@
+ip portal
+	switch ip constant
+	one ip to setup one machine
+	then request ips
+	can request 1 or up to 256
+	everyone in 10.0.0.0/8 subnet
+	packets with ips not assigned are dropped and points taken away from team
+
+attacks
+	visualization will pulse all nodes in an attack
+	some will randomly animate to the center and circle each other while pulsing
+	assume any team traffic is attack unless it's from/to white
+	use tcpdump
+	disable attacks in db
+	add new attacks in db (enabled)
+	visualization removes all animated nodes in the center
+	then unpulses all nodes no longer in an attack
+	all nodes in new attacks are pulsed
+	some are randomly animated to the center
+
+

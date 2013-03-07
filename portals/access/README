@@ -1,0 +1,6 @@
+2013-Cyber-Storm
+================
+config/		database configuration for the ip portal
+images/		contains images for the ip portal
+access.css	stylesheet for the access portal
+access.php	frontend for the access portal

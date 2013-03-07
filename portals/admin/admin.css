@@ -4,8 +4,6 @@ body
 	font-family: agency fb;
 	font-weight: bold;
 	font-size: 36pt;
-/*	color: #a4a4a4;
-        text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;*/
 	color: black;
 	background: #affff9; /* Old browsers */
 	background: url("images/white.gif") no-repeat right, -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #3f0001 100%) fixed; /* FF3.6+ */
@@ -20,12 +18,22 @@ body
 
 a:link
 {
-	color: gray;
+	color: black;
 }
 
 a:hover
 {
-	color: white;
+	color: gray;
+}
+
+h2.title
+{
+	border-bottom: 1px solid black;
+}
+
+#hr
+{
+	border-bottom: 1px solid black;
 }
 
 table, td, tr, input, select
