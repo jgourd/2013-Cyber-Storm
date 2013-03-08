@@ -1,0 +1,16 @@
+#!/bin/bash
+
+user=cyberstorm
+pass=cyberstorm
+db=cyberstorm
+
+for ((;;)); do
+	since -n ./sniff | grep 'length' | while read l; do
+		timestamp=`echo "$l" | awk '{print $1" "$2}' | awk -F. '{print $1}'`
+		src=`echo "$l" | awk '{print $3}'`
+		dst=`echo "$l" | awk '{print $5}' | awk -F, '{print $1}'`
+
+		echo "mysql -u$user -p$pass $db -e \"INSERT INTO attacks VALUES(NULL,(SELECT id FROM nodes WHERE mac='$src'),(SELECT id FROM nodes WHERE mac='$dst'),1,'$timestamp');\""
+	done
+	sleep 10s
+done

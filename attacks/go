@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $(whoami) != "root" ]; then
+	echo "You must be root."
+	exit
+fi
+
+interface=wlan0
+tcpdump -ttttlnei $interface 'tcp and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)' | tee -a ./sniff &
+./get_attacks

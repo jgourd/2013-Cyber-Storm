@@ -1,0 +1,5 @@
+2013-Cyber-Storm
+================
+get_attacks	parses the dump file and inserts attacks into the database
+go		starts attack detection
+sniff		dump file for tcpdump traffic
