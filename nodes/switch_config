@@ -1,0 +1,21 @@
+enable
+delete startup-config
+reload
+
+enable
+configure
+username cyberstorm password cyberstorm level 15
+interface vlan 1
+no ip address
+ip address 10.0.0.2 255.0.0.0
+exit
+no ip http server
+no ip https server
+no ip ssh server
+ip telnet server
+bridge aging-time 30
+interface range ethernet all
+spanning-tree portfast
+end
+copy running-config startup-config
+reload

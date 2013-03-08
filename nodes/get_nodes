@@ -1,0 +1,18 @@
+#!/bin/bash
+
+user=cyberstorm
+pass=cyberstorm
+db=cyberstorm
+
+ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM teams ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+switch_ips=(`mysql -u$user -p$pass $db -e "SELECT switch_ip FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+
+for ((i=0; i<${#switch_ips[@]}; i++)); do
+	id=${ids[$i]}
+	ip=${switch_ips[$i]}
+	echo "Checking $ip..."
+	macs=`(echo cyberstorm; echo cyberstorm; echo show bridge address-table; sleep 1; echo exit) | telnet $ip | awk '/[0-9a-f][0-9a-f]:/ {print $2}'`
+	for mac in $macs; do
+		mysql -u$user -p$pass $db -e "INSERT INTO nodes VALUES(NULL,'$mac',$id,NULL,NULL);"
+	done
+done

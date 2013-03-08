@@ -1,3 +1,4 @@
 2013-Cyber-Storm
 ================
-switch-notes	notes on switch configuration and how to grab active nodes (MAC addresses)
+get_nodes	gets nodes in the network
+switch_config	steps to configure team switches
