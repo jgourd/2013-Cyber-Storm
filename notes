@@ -29,3 +29,8 @@ nodes
 	nodes portal first pulls all nodes without a timeout time and their associated team
 	then it removes all existing nodes not in the list
 	finally it adds new nodes in the list
+
+reserve 10.0 for white
+anything else is fair game
+block input from 10.0 subnet on every team interface
+

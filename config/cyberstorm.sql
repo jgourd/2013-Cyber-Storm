@@ -180,6 +180,8 @@ CREATE TABLE `ips` (
   `id` smallint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(15) NOT NULL DEFAULT '',
   `team_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `timestamp_up` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp_down` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ips_team_id` (`team_id`),
   CONSTRAINT `ips_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -192,7 +194,7 @@ CREATE TABLE `ips` (
 
 LOCK TABLES `ips` WRITE;
 /*!40000 ALTER TABLE `ips` DISABLE KEYS */;
-INSERT INTO `ips` VALUES (1,'127.0.0.1',1);
+INSERT INTO `ips` VALUES (1,'127.0.0.1',1,NULL,NULL);
 /*!40000 ALTER TABLE `ips` ENABLE KEYS */;
 UNLOCK TABLES;
 
