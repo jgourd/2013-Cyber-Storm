@@ -1,0 +1,9 @@
+2013-Cyber-Storm
+================
+config/		database configuration for the scores portal
+get_scores.php	gets scores and challenges from the database
+get_teams.php	gets team count from the database
+images/		contains images for the scores portal
+sa.css		stylesheet for the scores portal
+sa.js		scripts for the scores portal
+sa.php		frontend for the scores portal
