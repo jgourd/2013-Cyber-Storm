@@ -1,0 +1,105 @@
+var NUM_NODES = 90;
+var RADIUS = 10;
+var QUADRANT_WIDTH = 15;
+var QUADRANT_HEIGHT = 6;
+var MAX_NODES = QUADRANT_WIDTH * QUADRANT_HEIGHT;
+
+function Team(rows, cols, color, gradient)
+{
+	this.rows = rows;
+	this.cols = cols;
+	this.color = color;
+	this.gradient = gradient;
+	this.max_nodes = rows * cols;
+}
+
+function Attack(first, second)
+{
+	this.first = first;
+	this.second = second;
+	this.x;
+	this.y;
+}
+
+function Node(x, y, r, color)
+{
+	this.origin_x = x;
+	this.origin_y = y;
+	this.cur_x = x;
+	this.cur_y = y;
+	this.r = r;
+	this.color = color;
+}
+
+Raphael.el.setColor = function(c)
+{
+	this.attr({fill: c, stroke: "#494949"});
+};
+
+jQuery(document).ready(function()
+{
+	var red_team = new Team(6, 15, "red", "0-#a90329:30-#1f0001:100");
+	var red_quadrant = new Raphael(red_team.color, "100%", "100%");
+	var red_nodes;
+	var blue_team = new Team(6, 15, "blue", "0-#0455e0:30-#020087:100");
+	var blue_quadrant = new Raphael(blue_team.color, "100%", "100%");
+	var blue_nodes;
+	var green_team = new Team(6, 15, "green", "0-#04e526:30-#00290c:100");
+	var green_quadrant = new Raphael(green_team.color, "100%", "100%");
+	var green_nodes;
+	var yellow_team = new Team(6, 15, "yellow", "0-#f2f200:30-#292b00:100");
+	var yellow_quadrant = new Raphael(yellow_team.color, "100%", "100%");
+	var yellow_nodes;
+	var purple_team = new Team(6, 15, "purple", "0-#ca00d1:30-#260029:100");
+	var purple_quadrant = new Raphael(purple_team.color, "100%", "100%");
+	var purple_nodes;
+	var orange_team = new Team(6, 15, "orange", "0-#ef6700:30-#3b0700:100");
+	var orange_quadrant = new Raphael(orange_team.color, "100%", "100%");
+	var orange_nodes;
+	var other_team = new Team(6, 31, "other", "0-#acacac:30-#292929:100");
+	var other_quadrant = new Raphael(other_team.color, "100%", "100%");
+	var other_nodes;
+	var attacks = [];
+
+	red_nodes = showNodes(red_team, red_quadrant);
+	blue_nodes = showNodes(blue_team, blue_quadrant);
+	green_nodes = showNodes(green_team, green_quadrant);
+	yellow_nodes = showNodes(yellow_team, yellow_quadrant);
+	purple_nodes = showNodes(purple_team, purple_quadrant);
+	orange_nodes = showNodes(orange_team, orange_quadrant);
+	other_nodes = showNodes(other_team, other_quadrant);
+//	attacks.push(new Attack(red_nodes[Math.floor(Math.random() * red_nodes.length)], blue_nodes[Math.floor(Math.random() * blue_nodes.length)]));
+	
+//	var anim1 = Raphael.animation({cx: 600, cy: -300}, 750, "back-out");
+//	var anim2 = Raphael.animation({cx: 600, cy: 0}, 750, "back-out");
+//	attacks[0].first.animate(anim1);
+//	attacks[0].second.animate(anim2);
+});
+
+function showNodes(team, quadrant)
+{
+	var nodes = [];//quadrant.set();
+	var max_nodes = team.max_nodes;
+	var cols = team.cols;
+	var num_nodes = Math.floor(Math.random() * max_nodes + 1);
+	var row = 0;
+	var col = 0;
+
+	for (var i=0; i<num_nodes; i++)
+	{
+		var node = quadrant.circle((col+1)*30, (row+1)*30, RADIUS);
+	
+		node.setColor(team.gradient);
+
+		nodes.push(node);
+
+		col++;
+		if (col == cols)
+		{
+			col = 0;
+			row++;
+		}
+	}
+
+	return nodes;
+}

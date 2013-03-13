@@ -1,0 +1,117 @@
+body
+{
+	background: black;
+	color: white;
+	overflow: hidden;
+}
+
+#sa_row
+{
+	display: table;
+	width: 100%;
+	height: 25%;
+}
+
+#quadrant
+{
+	display: table-cell;
+	width: 25%;
+	height: 100%;
+/*	border: 1px solid white;*/
+	vertical-align: top;
+}
+
+#quadrant.attack
+{
+	width: 50%;
+	border-left: 1px solid #494949;
+	border-right: 1px solid #494949;
+/*	border-left-style: dashed;
+	border-right-style: dashed;*/
+}
+
+#quadrant.top
+{
+	border-top: 1px solid #494949;
+/*	border-top-style: dashed;*/
+	border-radius: 150px 150px 0px 0px;
+}
+
+#quadrant.bottom
+{
+	border-bottom: 1px solid #494949;
+/*	border-bottom-style: dashed;*/
+	border-radius: 0px 0px 150px 150px;
+}
+
+#quadrant.other
+{
+	width: 50%;
+}
+
+#title
+{
+	float: left;
+	width: 100%;
+	height: 10%;
+	font-family: agency fb;
+	font-weight: bold;
+	font-size: 12pt;
+	text-align: center;
+}
+
+.nodes
+{
+/*	position: absolute;*/
+	width: 100%;
+	height: 90%;
+	clear: both;
+}
+
+#title.cs
+{
+	height: 100%;
+	font-size: 48pt;
+	color: gray;
+        text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+#title.red
+{
+	color: #a90329;
+}
+
+#title.blue
+{
+	color: #0455e0;
+}
+
+#title.green
+{
+	color: #04e526;
+}
+
+#title.yellow
+{
+	color: #f2f200;
+}
+
+#title.purple
+{
+	color: #ca00d1;
+}
+
+#title.orange
+{
+	color: #ef6700;
+}
+
+#title.other
+{
+	color: gray;
+}
+
+#other
+{
+	height: 92%;
+}
