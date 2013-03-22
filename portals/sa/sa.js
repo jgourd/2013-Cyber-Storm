@@ -5,8 +5,8 @@ Raphael.registerFont({"w":146,"face":{"font-family":"agency fb","font-weight":70
 /************************************************************************************************************************************/
 
 // global screen and canvas settings
-var SCREEN_WIDTH = 1920;
-var SCREEN_HEIGHT = 965;//1200;
+var SCREEN_WIDTH = 1024;//1920;
+var SCREEN_HEIGHT = 768;//965;//1200;
 var TOP_MARGIN = 10;
 var LEFT_MARGIN = 0;
 
@@ -16,7 +16,8 @@ var NODE_ATTACK_RADIUS = SCREEN_WIDTH * 0.01;
 var NODE_SPACING = 30;
 var ATTACK_NODE_SPACING = NODE_ATTACK_RADIUS * 1.25;
 var ATTACK_REVOLUTIONS = 2;
-var MAX_NUM_ATTACKS = 15;
+var MAX_NUM_ATTACKS = 12;
+var NUM_TEAMS = 7;
 
 /************************************************************************************************************************************/
 
@@ -52,12 +53,19 @@ function AttackPosition(x, y)
 	this.y = y;
 }
 
+// node "object"
+function Node(id, team_id)
+{
+	this.id = id;
+	this.team_id = team_id;
+}
+
 /************************************************************************************************************************************/
 
 // "main"
 jQuery(document).ready(function()
 {
-	var visualize = true;	// enables/disables attack visualization
+	var visualize = false;	// enables/disables attack visualization
 
 	// assign teams and team quadrants
 	var teams = [];
@@ -93,22 +101,6 @@ jQuery(document).ready(function()
 	info.print(SCREEN_WIDTH / 4 * 2 - teams[6].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 3 + TOP_MARGIN, teams[6].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#acacac"});
 	info.path("M" + (SCREEN_WIDTH / 4 + 150) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "H" + (SCREEN_WIDTH / 4 * 3 - 150) + "Q" + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "," + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 4 / 5 + 150) + "V" + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5 - 150) + "Q" + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "," + (SCREEN_WIDTH / 4 * 3 - 150) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "H" + (SCREEN_WIDTH / 4 + 150) + "Q" + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "," + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5 - 150) + "V" + (SCREEN_HEIGHT / 4 * 4 / 5 + 150) + "Q" + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "," + (SCREEN_WIDTH / 4 + 150) + "," + (SCREEN_HEIGHT / 4 * 4 / 5)).attr({stroke: "#494949"});
 
-	// set a click event handler to enable/disable attack visualization
-	// TODO: replace refresh with the first "step"
-	$("body").click(function()
-	{
-		visualize = !visualize;
-		if (visualize)
-		{
-			returned = 0;
-
-			setTimeout(function()
-			{
-				refresh(false);
-			}, 1000);
-		}
-	});
-
 	// set the attack visualization coordinates
 	var attack_coords = [];
 
@@ -128,44 +120,48 @@ jQuery(document).ready(function()
 	attack_coords.push(new AttackPosition(SCREEN_WIDTH / 4 * 2.33, SCREEN_HEIGHT / 4 * 2.75 * 4.5 / 5));
 	attack_coords.push(new AttackPosition(SCREEN_WIDTH / 4 * 2.66, SCREEN_HEIGHT / 4 * 2.75 * 4.5 / 5));
 
+	// nodes
+	var new_nodes = [];
+	var old_nodes = [];
 	var nodes = [];
-	/*var total_nodes = 0;
-	var total_nodes_appeared = 0;*/
+	var attacks = [];
+	var returned;
 
-	// highlight attack nodes
+	// set a click event handler to enable/disable attack visualization
+	// TODO: replace refresh with the first "step"
+	$("body").click(function()
+	{
+		visualize = !visualize;
 
-	// pick attack nodes to visualize
-
-	// visualize attack nodes
-
-
-
-
-
+		if (visualize)
+		{
+			setTimeout(function()
+			{
+				refresh();
+			}, 1000);
+		}
+	});
 
 	// main driver
 	// TODO
-	function refresh(first)
+	function refresh()
 	{
-		if (!first)
-			returned++;
-
-		if (visualize && (returned == attacks.length * 2 || first))
+		if (visualize)
 		{
-			returned = 0;
-
-			// fetch nodes
+			// fetch nodes, remove expired nodes, add new nodes
 			fetchNodes();
-			// remove expired nodes if we're refreshing
-			if (!first)
-				removeNodes();
-			// add new nodes
-			addNodes();
-			/*showNodes();*/
-			// fetch attacks
-			getAttacks();
+			// fetch attacks, highlight attack nodes, show attack nodes
+			fetchAttacks();
+//			highlightAttacks();
 			showAttacks();
+
+//			setTimeout(function()
+//			{
+//				refresh();
+//			}, 10000);
 		}
+//		else
+//			removeNodes();
 	}
 
 	// start refreshing the portal
@@ -173,26 +169,150 @@ jQuery(document).ready(function()
 	{
 		setTimeout(function()
 		{
-			refresh(true);
+			refresh();
 		}, 1000);
 	}
-
 
 	// TODO: fetch nodes from DB
 	// demo just randomly assigns nodes
 	function fetchNodes()
 	{
+		new_nodes = [];
+
+		$.ajax(
+		{
+			url: "get_nodes.php",
+			type: "POST",
+			success: function(data)
+			{
+				if (data == "")
+					return;
+
+				var fetched_nodes = data.split("|");
+
+				for (var i=1; i<=NUM_TEAMS; i++)
+				{
+					var team_nodes = [];
+
+					for (var j=0; j<fetched_nodes.length; j++)
+					{
+						var team_id = fetched_nodes[j].split(",")[0];
+						var node_id = fetched_nodes[j].split(",")[1];
+
+						if (team_id > i)
+						{
+							new_nodes.push(team_nodes);
+							break;
+						}
+
+						team_nodes.push(new Node(node_id, team_id));
+						fetched_nodes.splice(j--, 1);
+					}
+				}
+				new_nodes.push(team_nodes);
+
+				removeNodes();
+				prettyNodes();
+				addNodes();
+			}
+		});
 	}
 
 	// TODO: remove expired nodes, collapse nodes
 	// demo just removes them all
 	function removeNodes()
 	{
-		// each team
-		for (var i=0; i<quadrants.length; i++)
-			quadrants[i].clear();
+		if (nodes.length > 0)
+		{
+			// each team
+			for (var i=0; i<NUM_TEAMS; i++)
+			{
+				var to_remove = 0;
+				var to_create = 0;
+				var up = nodes[i].length;
+
+				// each node currently up on the team
+				for (var j=0; j<nodes[i].length; j++)
+				{
+					var found = false;
+
+					// each new node
+					for (var k=0; k<new_nodes[i].length; k++)
+					{
+						var node_id = nodes[i][j].data("id");
+						var new_node_id = new_nodes[i][k].id;
+
+						// the new node already exists
+						if (nodes[i][j].data("id") == new_nodes[i][k].id)
+						{
+							found = true;
+							new_nodes[i].splice(k, 1);
+							break;
+						}
+					}
+
+					// the node no longer exists
+					if (!found)
+					{
+						to_remove++;
+						nodes[i][j].remove();
+						nodes[i][j] = null;
+//						nodes[i].splice(j--, 1);
+					}
+				}
+
+				to_create = new_nodes[i].length;
+				console.log("Team " + i + ": " + up + " up, " + to_remove + " to remove, " + to_create + " to create");
+			}
+		}
 	}
-	function removeNodesWithAnimation()
+
+	function prettyNodes()
+	{
+		if (nodes.length > 0)
+		{
+			for (var i=0; i<NUM_TEAMS; i++)
+			{
+				var cols = teams[i].cols;
+				var col = 0;
+				var row = 0;
+
+				for (var j=0; j<nodes[i].length; j++)
+				{
+					if (nodes[i][j] != null)
+					{
+						col++;
+						if (col == cols)
+						{
+							col = 0;
+							row++;
+						}
+
+						continue;
+					}
+
+					for (var k=nodes[i].length-1; k>j; k--)
+					{
+						if (nodes[i][k] == null)
+						{
+							nodes[i].splice(k, 1);
+							continue;
+						}
+
+						var x = teams[i].x + (col + 1) * NODE_SPACING;
+						var y = teams[i].y + (row + 1) * NODE_SPACING;
+
+						nodes[i][j] = nodes[i][k].animate({cx: x, cy: y}, 2500);
+						nodes[i].splice(k, 1);
+						console.log("swapping " + j + " with " + k);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	/*function removeNodesWithAnimation()
 	{
 		// each team
 		for (var i=0; i<quadrants.length; i++)
@@ -208,12 +328,12 @@ jQuery(document).ready(function()
 					total_nodes--;
 
 					// add and show new nodes
-					addNodes();
+					showNodes();
 					showNodes();
 				});
 			});
 		}
-	}
+	}*/
 
 	// generate nodes for each team
 	function addNodes()
@@ -222,16 +342,63 @@ jQuery(document).ready(function()
 		/*if (total_nodes > 0)
 			return;*/
 
-		nodes = [];
+//		nodes = [];
 		/*total_nodes = 0;
 		total_nodes_appeared = 0;*/
 
-		for (var i=0; i<teams.length; i++)
+		for (var i=0; i<new_nodes.length; i++)
+		{
+			var team_nodes = [];
+			var cols = teams[i].cols;
+			var row = 0;
+			var col = 0;
+
+			for (var j=0; j<new_nodes[i].length; j++)
+			{
+				var node_id = new_nodes[i][j].id;
+				var x = teams[i].x + (col + 1) * NODE_SPACING;
+				var y = teams[i].y + (row + 1) * NODE_SPACING;
+
+				while (quadrants[i].getElementByPoint(x, y) != null)
+				{
+					col++;
+					if (col == cols)
+					{
+						col = 0;
+						row++;
+					}
+					x = teams[i].x + (col + 1) * NODE_SPACING;
+					y = teams[i].y + (row + 1) * NODE_SPACING;
+				}
+
+				var node = quadrants[i].circle(x, y, NODE_RADIUS);
+
+				node.attr({fill: teams[i].gradient, stroke: "#494949"});
+				node.data("id", node_id);
+				node.data("x", x);
+				node.data("y", y);
+				node.data("attack", false);
+
+				team_nodes.push(node);
+
+				col++;
+				if (col == cols)
+				{
+					col = 0;
+					row++;
+				}
+			}
+
+			if (team_nodes.length > 0)
+				nodes.push(team_nodes);
+		}
+
+/*		for (var i=0; i<teams.length; i++)
 		{
 			var team_nodes = [];
 			var max_nodes = teams[i].max_nodes;
 			var cols = teams[i].cols;
-			var num_nodes = Math.floor(Math.random() * (max_nodes - 1) + 1);//max_nodes;
+			var num_nodes = new_nodes.length;//Math.floor(Math.random() * (max_nodes - 1) + 1);//max_nodes;
 			var row = 0;
 			var col = 0;
 
@@ -239,7 +406,7 @@ jQuery(document).ready(function()
 			{
 				// set node properties
 				var node = quadrants[i].circle(teams[i].x + (col + 1) * NODE_SPACING, teams[i].y + (row + 1) * NODE_SPACING, NODE_RADIUS);
-				/*var node = quadrants[i].circle(teams[i].x + (col + 1) * NODE_SPACING, teams[i].y + (row + 1) * NODE_SPACING, 0);*/
+//				var node = quadrants[i].circle(teams[i].x + (col + 1) * NODE_SPACING, teams[i].y + (row + 1) * NODE_SPACING, 0);
 
 				node.attr({fill: teams[i].gradient, stroke: "#494949"});
 				node.data("mac", getMac());
@@ -247,7 +414,7 @@ jQuery(document).ready(function()
 
 				// add the node
 				team_nodes.push(node);
-				/*total_nodes++;*/
+//				total_nodes++;
 
 				col++;
 				if (col == cols)
@@ -260,6 +427,7 @@ jQuery(document).ready(function()
 			// add the team nodes
 			nodes.push(team_nodes);
 		}
+*/
 	}
 
 	// displays the nodes
@@ -284,26 +452,9 @@ jQuery(document).ready(function()
 		}
 	}*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	var attacks = [];
-	var returned;
-
-	function getAttacks()
+	// TODO: fetch attacks from DB
+	// demo just randomly assigns attacks
+	function fetchAttacks()
 	{
 		/*if (total_nodes_appeared < total_nodes)
 			return;*/
@@ -354,518 +505,62 @@ jQuery(document).ready(function()
 		}
 	}
 
+	// TODO: highlight attacks
+	// highlights attack nodes (just changes the stroke)
+	function highlightAttacks()
+	{
+	}
+
+	// shows attacks (randomly selects some to visualize in the attack arena)
 	function showAttacks()
 	{
-		attacks[0].first.animate({cx: attacks[0].x - ATTACK_NODE_SPACING, cy: attacks[0].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
+		for (var i=0; i<attacks.length; i++)
 		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[0].x + "," + attacks[0].y + "r-360"}, 1500, function()
+			var offset = ATTACK_NODE_SPACING;
+			var pair = info.set();
+			var returned = 0;
+
+			pair.push(attacks[i].first);
+			pair.push(attacks[i].second);
+
+			pair.forEach(function(n)
 			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[0].first.animate({cx: attacks[0].first_x, cy: attacks[0].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
+				offset *= -1;
+
+				var repeat;
+				var orig_x = (offset < 0 ? attacks[i].first_x : attacks[i].second_x);
+				var orig_y = (offset < 0 ? attacks[i].first_y : attacks[i].second_y);
+
+				var moveout = Raphael.animation({cx: orig_x, cy: orig_y, r: NODE_RADIUS}, 1000, "back-in", function()
+				{
+					returned++;
+
+					if (returned == attacks.length * 2)
 					{
 						setTimeout(function()
 						{
-							refresh(false);
+							refresh();
 						}, 1000);
-					});
+					}
+				});
+
+				var spin = Raphael.animation({transform: "...r360," + attacks[i].x + "," + attacks[i].y + "r-360"}, 1500, function()
+				{
+					repeat++;
+
+					if (repeat == ATTACK_REVOLUTIONS)
+						n.animate(moveout);
+				});
+				var movein = Raphael.animation({cx: attacks[i].x + offset, cy: attacks[i].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
+				{
+					repeat = 0;
+
+					n.animate(spin.repeat(ATTACK_REVOLUTIONS));
+				});
+
+				n.animate(movein);
 			});
-			attacks[0].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[0].second.animate({cx: attacks[0].x + ATTACK_NODE_SPACING, cy: attacks[0].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[0].x + "," + attacks[0].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[0].second.animate({cx: attacks[0].second_x, cy: attacks[0].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[0].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[1].first.animate({cx: attacks[1].x - ATTACK_NODE_SPACING, cy: attacks[1].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[1].x + "," + attacks[1].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[1].first.animate({cx: attacks[1].first_x, cy: attacks[1].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[1].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[1].second.animate({cx: attacks[1].x + ATTACK_NODE_SPACING, cy: attacks[1].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[1].x + "," + attacks[1].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[1].second.animate({cx: attacks[1].second_x, cy: attacks[1].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[1].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[2].first.animate({cx: attacks[2].x - ATTACK_NODE_SPACING, cy: attacks[2].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[2].x + "," + attacks[2].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[2].first.animate({cx: attacks[2].first_x, cy: attacks[2].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[2].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[2].second.animate({cx: attacks[2].x + ATTACK_NODE_SPACING, cy: attacks[2].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[2].x + "," + attacks[2].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[2].second.animate({cx: attacks[2].second_x, cy: attacks[2].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[2].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[3].first.animate({cx: attacks[3].x - ATTACK_NODE_SPACING, cy: attacks[3].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[3].x + "," + attacks[3].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[3].first.animate({cx: attacks[3].first_x, cy: attacks[3].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[3].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[3].second.animate({cx: attacks[3].x + ATTACK_NODE_SPACING, cy: attacks[3].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[3].x + "," + attacks[3].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[3].second.animate({cx: attacks[3].second_x, cy: attacks[3].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[3].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[4].first.animate({cx: attacks[4].x - ATTACK_NODE_SPACING, cy: attacks[4].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[4].x + "," + attacks[4].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[4].first.animate({cx: attacks[4].first_x, cy: attacks[4].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[4].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[4].second.animate({cx: attacks[4].x + ATTACK_NODE_SPACING, cy: attacks[4].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[4].x + "," + attacks[4].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[4].second.animate({cx: attacks[4].second_x, cy: attacks[4].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[4].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[5].first.animate({cx: attacks[5].x - ATTACK_NODE_SPACING, cy: attacks[5].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[5].x + "," + attacks[5].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[5].first.animate({cx: attacks[5].first_x, cy: attacks[5].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[5].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[5].second.animate({cx: attacks[5].x + ATTACK_NODE_SPACING, cy: attacks[5].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[5].x + "," + attacks[5].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[5].second.animate({cx: attacks[5].second_x, cy: attacks[5].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[5].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[6].first.animate({cx: attacks[6].x - ATTACK_NODE_SPACING, cy: attacks[6].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[6].x + "," + attacks[6].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[6].first.animate({cx: attacks[6].first_x, cy: attacks[6].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[6].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[6].second.animate({cx: attacks[6].x + ATTACK_NODE_SPACING, cy: attacks[6].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[6].x + "," + attacks[6].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[6].second.animate({cx: attacks[6].second_x, cy: attacks[6].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[6].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[7].first.animate({cx: attacks[7].x - ATTACK_NODE_SPACING, cy: attacks[7].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[7].x + "," + attacks[7].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[7].first.animate({cx: attacks[7].first_x, cy: attacks[7].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[7].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[7].second.animate({cx: attacks[7].x + ATTACK_NODE_SPACING, cy: attacks[7].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[7].x + "," + attacks[7].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[7].second.animate({cx: attacks[7].second_x, cy: attacks[7].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[7].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[8].first.animate({cx: attacks[8].x - ATTACK_NODE_SPACING, cy: attacks[8].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[8].x + "," + attacks[8].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[8].first.animate({cx: attacks[8].first_x, cy: attacks[8].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[8].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[8].second.animate({cx: attacks[8].x + ATTACK_NODE_SPACING, cy: attacks[8].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[8].x + "," + attacks[8].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[8].second.animate({cx: attacks[8].second_x, cy: attacks[8].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[8].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[9].first.animate({cx: attacks[9].x - ATTACK_NODE_SPACING, cy: attacks[9].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[9].x + "," + attacks[9].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[9].first.animate({cx: attacks[9].first_x, cy: attacks[9].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[9].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[9].second.animate({cx: attacks[9].x + ATTACK_NODE_SPACING, cy: attacks[9].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[9].x + "," + attacks[9].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[9].second.animate({cx: attacks[9].second_x, cy: attacks[9].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[9].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[10].first.animate({cx: attacks[10].x - ATTACK_NODE_SPACING, cy: attacks[10].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[10].x + "," + attacks[10].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[10].first.animate({cx: attacks[10].first_x, cy: attacks[10].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[10].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[10].second.animate({cx: attacks[10].x + ATTACK_NODE_SPACING, cy: attacks[10].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[10].x + "," + attacks[10].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[10].second.animate({cx: attacks[10].second_x, cy: attacks[10].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[10].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[11].first.animate({cx: attacks[11].x - ATTACK_NODE_SPACING, cy: attacks[11].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[11].x + "," + attacks[11].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[11].first.animate({cx: attacks[11].first_x, cy: attacks[11].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[11].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[11].second.animate({cx: attacks[11].x + ATTACK_NODE_SPACING, cy: attacks[11].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[11].x + "," + attacks[11].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[11].second.animate({cx: attacks[11].second_x, cy: attacks[11].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[11].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[12].first.animate({cx: attacks[12].x - ATTACK_NODE_SPACING, cy: attacks[12].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[12].x + "," + attacks[12].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[12].first.animate({cx: attacks[12].first_x, cy: attacks[12].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[12].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[12].second.animate({cx: attacks[12].x + ATTACK_NODE_SPACING, cy: attacks[12].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[12].x + "," + attacks[12].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[12].second.animate({cx: attacks[12].second_x, cy: attacks[12].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[12].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[13].first.animate({cx: attacks[13].x - ATTACK_NODE_SPACING, cy: attacks[13].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[13].x + "," + attacks[13].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[13].first.animate({cx: attacks[13].first_x, cy: attacks[13].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[13].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[13].second.animate({cx: attacks[13].x + ATTACK_NODE_SPACING, cy: attacks[13].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[13].x + "," + attacks[13].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[13].second.animate({cx: attacks[13].second_x, cy: attacks[13].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[13].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[14].first.animate({cx: attacks[14].x - ATTACK_NODE_SPACING, cy: attacks[14].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[14].x + "," + attacks[14].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[14].first.animate({cx: attacks[14].first_x, cy: attacks[14].first_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[14].first.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
-		attacks[14].second.animate({cx: attacks[14].x + ATTACK_NODE_SPACING, cy: attacks[14].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
-		{
-			var repeat = 0;
-			var anim = Raphael.animation({transform: "...r360," + attacks[14].x + "," + attacks[14].y + "r-360"}, 1500, function()
-			{
-				repeat++;
-				if (repeat == ATTACK_REVOLUTIONS)
-					attacks[14].second.animate({cx: attacks[14].second_x, cy: attacks[14].second_y, r: NODE_RADIUS}, 1000, "back-in", function()
-					{
-						setTimeout(function()
-						{
-							refresh(false);
-						}, 1000);
-					});
-			});
-			attacks[14].second.animate(anim.repeat(ATTACK_REVOLUTIONS));
-		});
+		}
 	}
 });
 
