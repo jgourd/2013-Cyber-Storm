@@ -5,11 +5,20 @@ body
 	overflow: hidden;
 }
 
+#viz
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+	border: 1px dotted #202020;
+	z-index: 1000;
+}
+
 #info
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 	font-family: "agency fb";
 	font-weight: bold;
 	font-size: 48pt;
@@ -20,48 +29,48 @@ body
 #red
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #blue
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #green
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #yellow
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #purple
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #orange
 {
 	position: absolute;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }
 
 #other
 {
 	position: relative;
-	width: 100%;
-	height: 100%;
+	width: 99%;
+	height: 98%;
 }

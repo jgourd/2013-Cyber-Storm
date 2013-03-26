@@ -5,8 +5,8 @@ Raphael.registerFont({"w":146,"face":{"font-family":"agency fb","font-weight":70
 /************************************************************************************************************************************/
 
 // global screen and canvas settings
-var SCREEN_WIDTH = 1024;//1920;
-var SCREEN_HEIGHT = 768;//965;//1200;
+var SCREEN_WIDTH = 1920;
+var SCREEN_HEIGHT = 965;//1200;
 var TOP_MARGIN = 10;
 var LEFT_MARGIN = 0;
 
@@ -16,8 +16,9 @@ var NODE_ATTACK_RADIUS = SCREEN_WIDTH * 0.01;
 var NODE_SPACING = 30;
 var ATTACK_NODE_SPACING = NODE_ATTACK_RADIUS * 1.25;
 var ATTACK_REVOLUTIONS = 2;
-var MAX_NUM_ATTACKS = 12;
+var MAX_NUM_ATTACKS = 15;
 var NUM_TEAMS = 7;
+var REFRESH_RATE = 10000;
 
 /************************************************************************************************************************************/
 
@@ -120,65 +121,45 @@ jQuery(document).ready(function()
 	attack_coords.push(new AttackPosition(SCREEN_WIDTH / 4 * 2.33, SCREEN_HEIGHT / 4 * 2.75 * 4.5 / 5));
 	attack_coords.push(new AttackPosition(SCREEN_WIDTH / 4 * 2.66, SCREEN_HEIGHT / 4 * 2.75 * 4.5 / 5));
 
-	// nodes
-	var new_nodes = [];
-	var old_nodes = [];
+	// node and attack variables
 	var nodes = [];
+	var new_nodes = [];
 	var attacks = [];
-	var returned;
 
 	// set a click event handler to enable/disable attack visualization
-	// TODO: replace refresh with the first "step"
 	$("body").click(function()
 	{
 		visualize = !visualize;
 
 		if (visualize)
 		{
+			$("#viz").hide();
+
 			setTimeout(function()
 			{
-				refresh();
+				fetchNodes();
 			}, 1000);
 		}
+		else
+			$("#viz").show();
 	});
-
-	// main driver
-	// TODO
-	function refresh()
-	{
-		if (visualize)
-		{
-			// fetch nodes, remove expired nodes, add new nodes
-			fetchNodes();
-			// fetch attacks, highlight attack nodes, show attack nodes
-			fetchAttacks();
-//			highlightAttacks();
-			showAttacks();
-
-//			setTimeout(function()
-//			{
-//				refresh();
-//			}, 10000);
-		}
-//		else
-//			removeNodes();
-	}
 
 	// start refreshing the portal
 	if (visualize)
 	{
 		setTimeout(function()
 		{
-			refresh();
+			fetchNodes();
 		}, 1000);
 	}
 
-	// TODO: fetch nodes from DB
-	// demo just randomly assigns nodes
+	// fetches nodes from DB
 	function fetchNodes()
 	{
+		// initialize new nodes
 		new_nodes = [];
 
+		// fetch the nodes from the DB
 		$.ajax(
 		{
 			url: "get_nodes.php",
@@ -190,6 +171,7 @@ jQuery(document).ready(function()
 
 				var fetched_nodes = data.split("|");
 
+				// grab team nodes
 				for (var i=1; i<=NUM_TEAMS; i++)
 				{
 					var team_nodes = [];
@@ -199,44 +181,48 @@ jQuery(document).ready(function()
 						var team_id = fetched_nodes[j].split(",")[0];
 						var node_id = fetched_nodes[j].split(",")[1];
 
+						// add the team nodes to the list of new nodes
 						if (team_id > i)
 						{
 							new_nodes.push(team_nodes);
 							break;
 						}
 
+						// add the node to the list of the team's nodes
 						team_nodes.push(new Node(node_id, team_id));
+						// remove this node from the list of fetched nodes
 						fetched_nodes.splice(j--, 1);
 					}
 				}
+
+				// add the team nodes to the list of new nodes (handles the last team)
 				new_nodes.push(team_nodes);
 
+				// and now remove nodes that are no longer up
 				removeNodes();
-				prettyNodes();
-				addNodes();
-			}
+			}//,
+//			error: function(e)
+//			{
+//				alert("Error: " + e);
+//			}
 		});
 	}
 
-	// TODO: remove expired nodes, collapse nodes
-	// demo just removes them all
+	// remove expired nodes
 	function removeNodes()
 	{
+		// don't do this the first time
 		if (nodes.length > 0)
 		{
-			// each team
+			// remove nodes for each team
 			for (var i=0; i<NUM_TEAMS; i++)
 			{
-				var to_remove = 0;
-				var to_create = 0;
-				var up = nodes[i].length;
-
-				// each node currently up on the team
+				// go through each node currently up on the team
 				for (var j=0; j<nodes[i].length; j++)
 				{
 					var found = false;
 
-					// each new node
+					// see if it the team node exists in the new node list
 					for (var k=0; k<new_nodes[i].length; k++)
 					{
 						var node_id = nodes[i][j].data("id");
@@ -246,6 +232,7 @@ jQuery(document).ready(function()
 						if (nodes[i][j].data("id") == new_nodes[i][k].id)
 						{
 							found = true;
+							// remove it from the new node list
 							new_nodes[i].splice(k, 1);
 							break;
 						}
@@ -254,23 +241,29 @@ jQuery(document).ready(function()
 					// the node no longer exists
 					if (!found)
 					{
-						to_remove++;
 						nodes[i][j].remove();
 						nodes[i][j] = null;
-//						nodes[i].splice(j--, 1);
+						console.log(i+","+j+"=null");
 					}
 				}
 
-				to_create = new_nodes[i].length;
-				console.log("Team " + i + ": " + up + " up, " + to_remove + " to remove, " + to_create + " to create");
 			}
 		}
+
+		setTimeout(function()
+		{
+			// collapse the team nodes
+			prettyNodes();
+		}, 500);
 	}
 
+	// collapse nodes
 	function prettyNodes()
 	{
+		// don't do this the first time
 		if (nodes.length > 0)
 		{
+			// collapse nodes for each team
 			for (var i=0; i<NUM_TEAMS; i++)
 			{
 				var cols = teams[i].cols;
@@ -279,6 +272,7 @@ jQuery(document).ready(function()
 
 				for (var j=0; j<nodes[i].length; j++)
 				{
+					// find the first removed node (empty spot)
 					if (nodes[i][j] != null)
 					{
 						col++;
@@ -291,94 +285,82 @@ jQuery(document).ready(function()
 						continue;
 					}
 
-					for (var k=nodes[i].length-1; k>j; k--)
+					// calculate its location
+					var x = teams[i].x + (col + 1) * NODE_SPACING;
+					var y = teams[i].y + (row + 1) * NODE_SPACING;
+
+					// find the last valid node
+					for (var k=nodes[i].length-1; k>=j; k--)
 					{
+						// purge nodes already removed as we go through the nodes from last to first
 						if (nodes[i][k] == null)
 						{
 							nodes[i].splice(k, 1);
 							continue;
 						}
 
-						var x = teams[i].x + (col + 1) * NODE_SPACING;
-						var y = teams[i].y + (row + 1) * NODE_SPACING;
+						// move the last valid node to the first empty spot
+						nodes[i][j] = nodes[i][k].animate({cx: x, cy: y}, 500);
 
-						nodes[i][j] = nodes[i][k].animate({cx: x, cy: y}, 2500);
+						// and purge it
 						nodes[i].splice(k, 1);
-						console.log("swapping " + j + " with " + k);
+						
+						col++;
+						if (col == cols)
+						{
+							col = 0;
+							row++;
+						}
+
 						break;
 					}
 				}
 			}
 		}
+
+		setTimeout(function()
+		{
+			// add new nodes
+			addNodes();
+		}, 1500);
 	}
 
-	/*function removeNodesWithAnimation()
-	{
-		// each team
-		for (var i=0; i<quadrants.length; i++)
-		{
-			// each node
-			quadrants[i].forEach(function(n)
-			{
-				// "fade" out
-				n.animate({r: 0}, 1000, function()
-				{
-					// remove from the canvas
-					this.remove();
-					total_nodes--;
-
-					// add and show new nodes
-					showNodes();
-					showNodes();
-				});
-			});
-		}
-	}*/
-
-	// generate nodes for each team
+	// add new nodes
 	function addNodes()
 	{
-		// if refreshing, wait until all nodes have "faded" out and are removed from the canvas
-		/*if (total_nodes > 0)
-			return;*/
-
-//		nodes = [];
-		/*total_nodes = 0;
-		total_nodes_appeared = 0;*/
-
-		for (var i=0; i<new_nodes.length; i++)
+		// add new nodes for each team
+//		for (var i=0; i<new_nodes.length; i++)
+		for (var i=0; i<NUM_TEAMS; i++)
 		{
 			var team_nodes = [];
 			var cols = teams[i].cols;
 			var row = 0;
 			var col = 0;
 
+			// if nodes already exist
+			if (nodes.length > i)
+			{
+				// then calculate the end position (where new nodes will begin)
+				row = Math.floor(nodes[i].length / cols);
+				col = nodes[i].length % cols;
+			}
+
+			// add each new node
 			for (var j=0; j<new_nodes[i].length; j++)
 			{
 				var node_id = new_nodes[i][j].id;
 				var x = teams[i].x + (col + 1) * NODE_SPACING;
 				var y = teams[i].y + (row + 1) * NODE_SPACING;
-
-				while (quadrants[i].getElementByPoint(x, y) != null)
-				{
-					col++;
-					if (col == cols)
-					{
-						col = 0;
-						row++;
-					}
-					x = teams[i].x + (col + 1) * NODE_SPACING;
-					y = teams[i].y + (row + 1) * NODE_SPACING;
-				}
-
 				var node = quadrants[i].circle(x, y, NODE_RADIUS);
 
+				// set the node's attributes
 				node.attr({fill: teams[i].gradient, stroke: "#494949"});
 				node.data("id", node_id);
 				node.data("x", x);
 				node.data("y", y);
 				node.data("attack", false);
 
+				// add it to the team's node list
 				team_nodes.push(node);
 
 				col++;
@@ -389,68 +371,20 @@ jQuery(document).ready(function()
 				}
 			}
 
-			if (team_nodes.length > 0)
+			// if no nodes currently exist for this team, then push the team's nodes to the node list
+			if (nodes.length <= i)
 				nodes.push(team_nodes);
+			// otherwise concatenate new nodes to existing nodes
+			else
+				nodes[i] = nodes[i].concat(team_nodes);
 		}
 
-/*		for (var i=0; i<teams.length; i++)
+		setTimeout(function()
 		{
-			var team_nodes = [];
-			var max_nodes = teams[i].max_nodes;
-			var cols = teams[i].cols;
-			var num_nodes = new_nodes.length;//Math.floor(Math.random() * (max_nodes - 1) + 1);//max_nodes;
-			var row = 0;
-			var col = 0;
-
-			for (var j=0; j<num_nodes; j++)
-			{
-				// set node properties
-				var node = quadrants[i].circle(teams[i].x + (col + 1) * NODE_SPACING, teams[i].y + (row + 1) * NODE_SPACING, NODE_RADIUS);
-//				var node = quadrants[i].circle(teams[i].x + (col + 1) * NODE_SPACING, teams[i].y + (row + 1) * NODE_SPACING, 0);
-
-				node.attr({fill: teams[i].gradient, stroke: "#494949"});
-				node.data("mac", getMac());
-				node.data("attack", false);
-
-				// add the node
-				team_nodes.push(node);
-//				total_nodes++;
-
-				col++;
-				if (col == cols)
-				{
-					col = 0;
-					row++;
-				}
-			}
-
-			// add the team nodes
-			nodes.push(team_nodes);
-		}
-*/
+			if (visualize)
+				fetchNodes();
+		}, REFRESH_RATE);
 	}
-
-	// displays the nodes
-	/*function showNodesWithAnimation()
-	{
-		// each team
-		for (var i=0; i<quadrants.length; i++)
-		{
-			// each node
-			quadrants[i].forEach(function(n)
-			{
-				// "fade" in
-				n.animate({r: NODE_RADIUS}, 1000, function()
-				{
-					total_nodes_appeared++;
-
-					// get and show attacks
-					getAttacks();
-					showAttacks();
-				});
-			});
-		}
-	}*/
 
 	// TODO: fetch attacks from DB
 	// demo just randomly assigns attacks
@@ -564,7 +498,7 @@ jQuery(document).ready(function()
 	}
 });
 
-function getMac()
+/*function getMac()
 {
 	var syms = [ "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" ];
 	var mac = "";
@@ -577,6 +511,4 @@ function getMac()
 	}
 
 	return mac;
-}
-
-
+}*/

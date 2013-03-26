@@ -19,6 +19,7 @@
 	</head>
 
 	<body>
+		<div id="viz"></div>
 		<div id="info"></div>
 		<div id="red"></div>
 		<div id="blue"></div>

@@ -17,7 +17,7 @@ while ((1)); do
 		fi
 		to_create=$((RANDOM % (max_nodes - (existing_nodes - to_remove))))
 
-		echo "Team $team_id: $existing_nodes up, $to_remove to remove, $to_create to create"
+		echo "Team $team_id: $existing_nodes existing, $to_remove to remove, $to_create to create, $((existing_nodes - to_remove + to_create)) now up"
 		mysql -ucyberstorm -pcyberstorm cyberstorm -e "update nodes set timestamp_down=now() where team_id=$team_id and timestamp_down is null order by rand() limit $to_remove"
 		for ((i=0; i<to_create; i++)); do
 			mac=`(date; cat /proc/interrupts) | md5sum | sed -r 's/^(.{12}).*$/\1/; s/([0-9a-f]{2})/\1:/g; s/:$//;'`
