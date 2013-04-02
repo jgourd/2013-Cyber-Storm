@@ -2,27 +2,25 @@
 
 secs=5
 num_teams=6
-max_nodes=75
 
 while ((1)); do
-	max_nodes=75
-	for ((team_id=1; team_id<=num_teams; team_id++)); do
-		existing_nodes=`mysql -ucyberstorm -pcyberstorm cyberstorm -e "select count(id) from nodes where team_id=$team_id and timestamp_down is null" | tail -n 1`
-		to_remove=0
-		if ((existing_nodes > 0)); then
-			to_remove=$((RANDOM % (existing_nodes + 1)))
-		fi
-		if ((team_id == 6)); then
-			max_nodes=150
-		fi
-		to_create=$((RANDOM % (max_nodes - (existing_nodes - to_remove))))
+	num_nodes=`mysql -ucyberstorm -pcyberstorm cyberstorm -e "select count(id) from nodes where timestamp_down is null" | tail -n 1`
+	num_attacks=0
+	if ((num_nodes >= 2)); then
+		num_attacks=$((RANDOM % num_nodes))
+	fi
 
-		echo "Team $team_id: $existing_nodes up, $to_remove to remove, $to_create to create"
-		mysql -ucyberstorm -pcyberstorm cyberstorm -e "update nodes set timestamp_down=now() where team_id=$team_id and timestamp_down is null order by rand() limit $to_remove"
-		for ((i=0; i<to_create; i++)); do
-			mac=`(date; cat /proc/interrupts) | md5sum | sed -r 's/^(.{12}).*$/\1/; s/([0-9a-f]{2})/\1:/g; s/:$//;'`
-			mysql -ucyberstorm -pcyberstorm cyberstorm -e "insert into nodes values(NULL, '$mac', $team_id, NULL, NULL);"
+	echo "$num_nodes nodes up; generating $num_attacks attacks"
+	for ((i=0; i<num_attacks; i++)); do
+		src_id=$((RANDOM % num_teams + 1))
+		dst_id=$src_id
+		while ((dst_id == src_id)); do
+			dst_id=$((RANDOM % num_teams + 1))
 		done
+		src=`mysql -ucyberstorm -pcyberstorm cyberstorm -e "select id from nodes where team_id=$src_id order by rand() limit 1" | tail -n 1`
+		dst=`mysql -ucyberstorm -pcyberstorm cyberstorm -e "select id from nodes where team_id=$dst_id order by rand() limit 1" | tail -n 1`
+
+		mysql -ucyberstorm -pcyberstorm cyberstorm -e "insert into attacks values(null,$src,$dst,null)"
 	done
 
 	echo "Sleeping..."

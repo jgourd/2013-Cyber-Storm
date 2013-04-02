@@ -33,7 +33,10 @@ END;
 		echo "\t\t\tYour team: $team<p/>\n\n";
 
 		if (!isset($_SESSION["team"]))
+		{
 			login($team_id);
+			echo "\t\t</div>\n";
+		}
 		else
 		{
 			if ($_POST && isset($_POST["ip"]))
@@ -91,9 +94,9 @@ END;
 				}
 			}
 			echo "\t\t</div>\n\n";
-
-			echo "\t\t<div id=\"image\" class=\"$color\"></div>\n";
 		}
+
+		echo "\t\t<div id=\"image\" class=\"$color\"></div>\n";
 	}
 
 	echo "\t</body>\n";
@@ -114,10 +117,10 @@ function login($team_id)
 	}
 	else
 	{
-		echo "\t\t<form method=\"post\">\n";
-		echo "\t\t\tPassword: <input type=\"password\" name=\"password\" size=\"50\"/>\n";
-		echo "\t\t\t<input type=\"submit\" value=\"Login\"/>\n";
-		echo "\t\t</form>\n";
+		echo "\t\t\t<form method=\"post\">\n";
+		echo "\t\t\t\tPassword: <input type=\"password\" name=\"password\" size=\"50\"/>\n";
+		echo "\t\t\t\t<input type=\"submit\" value=\"Login\"/>\n";
+		echo "\t\t\t</form>\n";
 	}
 }
 

@@ -50,38 +50,38 @@ a:hover
 
 #image.red
 {
-	background: url("images/red.gif") no-repeat top right;
-	background-size: 70%;
+	background: url("images/red.png") no-repeat top right;
+	background-size: 90%;
 }
 
 #image.blue
 {
-	background: url("images/blue.gif") no-repeat top right;
+	background: url("images/blue.png") no-repeat top right;
 	background-size: 100%;
 }
 
 #image.green
 {
-	background: url("images/green.gif") no-repeat top right;
-	background-size: 70%;
+	background: url("images/green.png") no-repeat top right;
+	background-size: 80%;
 }
 
 #image.yellow
 {
-	background: url("images/yellow.gif") no-repeat top right;
-	background-size: 70%;
+	background: url("images/yellow.png") no-repeat top right;
+	background-size: 90%;
 }
 
 #image.purple
 {
-	background: url("images/purple.gif") no-repeat top right;
-	background-size: 70%;
+	background: url("images/purple.png") no-repeat top right;
+	background-size: 90%;
 }
 
 #image.orange
 {
-	background: url("images/orange.gif") no-repeat top right;
-	background-size: 70%;
+	background: url("images/orange.png") no-repeat top right;
+	background-size: 90%;
 }
 
 h2.title
@@ -189,4 +189,19 @@ body.orange
 	background: linear-gradient(to bottom, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef6700', endColorstr='#5b2700',GradientType=0 ) fixed; /* IE6-9 */
 	background-size: 20%;
+}
+
+body.white
+{
+	color: #7c7979;
+        text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
+	background: #d7d4d5; /* Old browsers */
+	background: url("images/white.png") no-repeat right, -moz-linear-gradient(top, #d7d4d5 0%, #aca7a8 75%, #3f3c3c 100%) fixed; /* FF3.6+ */
+	background: url("images/white.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d7d4d5), color-stop(75%,#aca7a8), color-stop(100%,#3f3c3c)) fixed; /* Chrome,Safari4+ */
+	background: url("images/white.png") no-repeat right, -webkit-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/white.png") no-repeat right, -o-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Opera 11.10+ */
+	background: url("images/white.png") no-repeat right, -ms-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* IE10+ */
+	background: url("images/white.png") no-repeat right, linear-gradient(to bottom, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d4d5', endColorstr='#3f3c3c',GradientType=0 ) fixed; /* IE6-9 */
+	background-size: 35%;
 }

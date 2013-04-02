@@ -5,16 +5,18 @@ Raphael.registerFont({"w":146,"face":{"font-family":"agency fb","font-weight":70
 /************************************************************************************************************************************/
 
 // global screen and canvas settings
-var SCREEN_WIDTH = 1920;
-var SCREEN_HEIGHT = 965;//1200;
+var SCREEN_WIDTH = 1920;	// laptop is 1280
+var SCREEN_HEIGHT = 1200;	// laptop is 800 or 965
 var TOP_MARGIN = 10;
 var LEFT_MARGIN = 0;
 
 // global SA settings
-var NODE_RADIUS = 10;
-var NODE_ATTACK_RADIUS = SCREEN_WIDTH * 0.01;
+var NODE_ROWS = 6;
+var NODE_COLS = 15;
 var NODE_SPACING = 30;
-var ATTACK_NODE_SPACING = NODE_ATTACK_RADIUS * 1.25;
+var NODE_RADIUS = 10;
+var ATTACK_NODE_RADIUS = SCREEN_WIDTH * 0.01;
+var ATTACK_NODE_SPACING = ATTACK_NODE_RADIUS * 1.25;
 var ATTACK_REVOLUTIONS = 2;
 var MAX_NUM_ATTACKS = 15;
 var NUM_TEAMS = 7;
@@ -23,12 +25,13 @@ var REFRESH_RATE = 10000;
 /************************************************************************************************************************************/
 
 // team "object"
-function Team(x, y, rows, cols, color, gradient)
+function Team(x, y, rows, cols, name, color, gradient)
 {
 	this.x = x;
 	this.y = y;
 	this.rows = rows;
 	this.cols = cols;
+	this.name = name;
 	this.color = color;
 	this.gradient = gradient;
 	this.max_nodes = rows * cols;
@@ -71,19 +74,19 @@ jQuery(document).ready(function()
 	// assign teams and team quadrants
 	var teams = [];
 	var quadrants = [];
-	teams.push(new Team(LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "red", "0-#a90329:30-#1f0001:100"));
+	teams.push(new Team(LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, NODE_ROWS, NODE_COLS, "ARES", "red", "0-#a90329:30-#1f0001:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "blue", "0-#0455e0:30-#020087:100"));
+	teams.push(new Team(LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, NODE_ROWS, NODE_COLS, "CHAOS", "blue", "0-#0455e0:30-#020087:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(SCREEN_WIDTH / 4 + LEFT_MARGIN, TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "green", "0-#04e526:30-#00290c:100"));
+	teams.push(new Team(SCREEN_WIDTH / 4 + LEFT_MARGIN, TOP_MARGIN, NODE_ROWS, NODE_COLS, "HERA", "green", "0-#04e526:30-#00290c:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(SCREEN_WIDTH / 4 * 2 + LEFT_MARGIN, TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "yellow", "0-#f2f200:30-#292b00:100"));
+	teams.push(new Team(SCREEN_WIDTH / 4 * 2 + LEFT_MARGIN, TOP_MARGIN, NODE_ROWS, NODE_COLS, "HERMES", "yellow", "0-#f2f200:30-#292b00:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(SCREEN_WIDTH / 4 * 3 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "purple", "0-#ca00d1:30-#260029:100"));
+	teams.push(new Team(SCREEN_WIDTH / 4 * 3 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, NODE_ROWS, NODE_COLS, "NYX", "purple", "0-#ca00d1:30-#260029:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(SCREEN_WIDTH / 4 * 3 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.5), Math.floor(SCREEN_WIDTH / 4 / 30 - 1), "orange", "0-#ef6700:30-#3b0700:100"));
+	teams.push(new Team(SCREEN_WIDTH / 4 * 3 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, NODE_ROWS, NODE_COLS, "ZEUS", "orange", "0-#ef6700:30-#3b0700:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
-	teams.push(new Team(SCREEN_WIDTH / 4 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 3 + TOP_MARGIN, Math.floor(SCREEN_HEIGHT / 4 / 30 / 1.25), Math.floor(SCREEN_WIDTH / 2 / 30 - 1), "other", "0-#acacac:30-#292929:100"));
+	teams.push(new Team(SCREEN_WIDTH / 4 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 3 + TOP_MARGIN, NODE_ROWS + 1, NODE_COLS * 2 + 1, "OLYMPUS", "white", "0-#acacac:30-#292929:100"));
 	quadrants.push(new Raphael(teams[teams.length-1].color, "100%", "100%"));
 
 	// create the text canvas and display the Cyber Storm logo and team names
@@ -93,13 +96,13 @@ jQuery(document).ready(function()
 	var title_scale = 0.384615385;
 
 	info.print(SCREEN_WIDTH / 4 / 2 - title.length * title_size * title_scale / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 / 2 - 50 + TOP_MARGIN, title, info.getFont("agency fb"), title_size).attr({fill: "gray", stroke: "white"});
-	info.print(SCREEN_WIDTH / 4 * 0.5 - teams[0].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, teams[0].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#a90329"});
-	info.print(SCREEN_WIDTH / 4 * 0.5 - teams[1].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, teams[1].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#0455e0"});
-	info.print(SCREEN_WIDTH / 4 * 1.5 - teams[2].color.length * 10 / 2 + LEFT_MARGIN, TOP_MARGIN, teams[2].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#04e526"});
-	info.print(SCREEN_WIDTH / 4 * 2.5 - teams[3].color.length * 10 / 2 + LEFT_MARGIN, TOP_MARGIN, teams[3].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#f2f200"});
-	info.print(SCREEN_WIDTH / 4 * 3.5 - teams[4].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, teams[4].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#ca00d1"});
-	info.print(SCREEN_WIDTH / 4 * 3.5 - teams[5].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, teams[5].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#ef6700"});
-	info.print(SCREEN_WIDTH / 4 * 2 - teams[6].color.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 3 + TOP_MARGIN, teams[6].color.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#acacac"});
+	info.print(SCREEN_WIDTH / 4 * 0.5 - teams[0].name.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, teams[0].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#a90329"});
+	info.print(SCREEN_WIDTH / 4 * 0.5 - teams[1].name.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, teams[1].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#0455e0"});
+	info.print(SCREEN_WIDTH / 4 * 1.5 - teams[2].name.length * 10 / 2 + LEFT_MARGIN, TOP_MARGIN, teams[2].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#04e526"});
+	info.print(SCREEN_WIDTH / 4 * 2.5 - teams[3].name.length * 10 / 2 + LEFT_MARGIN, TOP_MARGIN, teams[3].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#f2f200"});
+	info.print(SCREEN_WIDTH / 4 * 3.5 - teams[4].name.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 + TOP_MARGIN, teams[4].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#ca00d1"});
+	info.print(SCREEN_WIDTH / 4 * 3.5 - teams[5].name.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 2 + TOP_MARGIN, teams[5].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#ef6700"});
+	info.print(SCREEN_WIDTH / 4 * 2 - teams[6].name.length * 10 / 2 + LEFT_MARGIN, SCREEN_HEIGHT / 4 * 3 + TOP_MARGIN, teams[6].name.toUpperCase(), info.getFont("agency fb"), 16).attr({fill: "#acacac"});
 	info.path("M" + (SCREEN_WIDTH / 4 + 150) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "H" + (SCREEN_WIDTH / 4 * 3 - 150) + "Q" + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "," + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 4 / 5 + 150) + "V" + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5 - 150) + "Q" + (SCREEN_WIDTH / 4 * 3) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "," + (SCREEN_WIDTH / 4 * 3 - 150) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "H" + (SCREEN_WIDTH / 4 + 150) + "Q" + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5) + "," + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 2 + SCREEN_HEIGHT / 4 * 4.5 / 5 - 150) + "V" + (SCREEN_HEIGHT / 4 * 4 / 5 + 150) + "Q" + (SCREEN_WIDTH / 4) + "," + (SCREEN_HEIGHT / 4 * 4 / 5) + "," + (SCREEN_WIDTH / 4 + 150) + "," + (SCREEN_HEIGHT / 4 * 4 / 5)).attr({stroke: "#494949"});
 
 	// set the attack visualization coordinates
@@ -382,7 +385,8 @@ jQuery(document).ready(function()
 		setTimeout(function()
 		{
 			if (visualize)
-				fetchNodes();
+//				fetchNodes();
+fetchAttacks();
 		}, REFRESH_RATE);
 	}
 
@@ -437,6 +441,8 @@ jQuery(document).ready(function()
 
 			attacks.push(new Attack(attack_coords[i].x, attack_coords[i].y, nodes[src][src_node], nodes[dst][dst_node]));
 		}
+
+		showAttacks();
 	}
 
 	// TODO: highlight attacks
@@ -485,7 +491,7 @@ jQuery(document).ready(function()
 					if (repeat == ATTACK_REVOLUTIONS)
 						n.animate(moveout);
 				});
-				var movein = Raphael.animation({cx: attacks[i].x + offset, cy: attacks[i].y, r: NODE_ATTACK_RADIUS}, 2000, "back-out", function()
+				var movein = Raphael.animation({cx: attacks[i].x + offset, cy: attacks[i].y, r: ATTACK_NODE_RADIUS}, 2000, "back-out", function()
 				{
 					repeat = 0;
 
@@ -495,6 +501,12 @@ jQuery(document).ready(function()
 				n.animate(movein);
 			});
 		}
+
+		setTimeout(function()
+		{
+			if (visualize)
+				fetchNodes();
+		}, REFRESH_RATE);
 	}
 });
 

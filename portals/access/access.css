@@ -33,14 +33,14 @@ body.red
 	color: #440001;
         text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #a90329; /* Old browsers */
-	background: url("images/red.gif") no-repeat right, -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #3f0001 100%) fixed; /* FF3.6+ */
-	background: url("images/red.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#3f0001)) fixed; /* Chrome,Safari4+ */
-	background: url("images/red.gif") no-repeat right, -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/red.gif") no-repeat right, -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Opera 11.10+ */
-	background: url("images/red.gif") no-repeat right, -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* IE10+ */
-	background: url("images/red.gif") no-repeat right, linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* W3C */
+	background: url("images/red.png") no-repeat right, -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #3f0001 100%) fixed; /* FF3.6+ */
+	background: url("images/red.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#3f0001)) fixed; /* Chrome,Safari4+ */
+	background: url("images/red.png") no-repeat right, -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/red.png") no-repeat right, -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Opera 11.10+ */
+	background: url("images/red.png") no-repeat right, -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* IE10+ */
+	background: url("images/red.png") no-repeat right, linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#3f0001',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	background-size: 35%;
 }
 
 body.blue
@@ -48,14 +48,14 @@ body.blue
 	color: #0200a7;
 	text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #0455e0; /* Old browsers */
-	background: url("images/blue.gif") no-repeat right, -moz-linear-gradient(top, #0455e0 0%, #033db2 40%, #020087 100%) fixed; /* FF3.6+ */
-	background: url("images/blue.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0455e0), color-stop(40%,#033db2), color-stop(100%,#020087)) fixed; /* Chrome,Safari4+ */
-	background: url("images/blue.gif") no-repeat right, -webkit-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/blue.gif") no-repeat right, -o-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* Opera 11.10+ */
-	background: url("images/blue.gif") no-repeat right, -ms-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* IE10+ */
-	background: url("images/blue.gif") no-repeat right, linear-gradient(to bottom, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* W3C */
+	background: url("images/blue.png") no-repeat right, -moz-linear-gradient(top, #0455e0 0%, #033db2 40%, #020087 100%) fixed; /* FF3.6+ */
+	background: url("images/blue.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0455e0), color-stop(40%,#033db2), color-stop(100%,#020087)) fixed; /* Chrome,Safari4+ */
+	background: url("images/blue.png") no-repeat right, -webkit-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/blue.png") no-repeat right, -o-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* Opera 11.10+ */
+	background: url("images/blue.png") no-repeat right, -ms-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* IE10+ */
+	background: url("images/blue.png") no-repeat right, linear-gradient(to bottom, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0455e0', endColorstr='#020087',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 30%;
+	background-size: 40%;
 }
 
 body.green
@@ -63,14 +63,14 @@ body.green
 	color: #00490c;
 	text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #04e526; /* Old browsers */
-	background: url("images/green.gif") no-repeat right, -moz-linear-gradient(top, #04e526 0%, #03b232 40%, #00490c 100%) fixed; /* FF3.6+ */
-	background: url("images/green.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#04e526), color-stop(40%,#03b232), color-stop(100%,#00490c)) fixed; /* Chrome,Safari4+ */
-	background: url("images/green.gif") no-repeat right, -webkit-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/green.gif") no-repeat right, -o-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* Opera 11.10+ */
-	background: url("images/green.gif") no-repeat right, -ms-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* IE10+ */
-	background: url("images/green.gif") no-repeat right, linear-gradient(to bottom, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* W3C */
+	background: url("images/green.png") no-repeat right, -moz-linear-gradient(top, #04e526 0%, #03b232 40%, #00490c 100%) fixed; /* FF3.6+ */
+	background: url("images/green.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#04e526), color-stop(40%,#03b232), color-stop(100%,#00490c)) fixed; /* Chrome,Safari4+ */
+	background: url("images/green.png") no-repeat right, -webkit-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/green.png") no-repeat right, -o-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* Opera 11.10+ */
+	background: url("images/green.png") no-repeat right, -ms-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* IE10+ */
+	background: url("images/green.png") no-repeat right, linear-gradient(to bottom, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#04e526', endColorstr='#00490c',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	background-size: 30%;
 }
 
 body.yellow
@@ -78,14 +78,14 @@ body.yellow
 	color: #696b00;
 	text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #f2f200; /* Old browsers */
-	background: url("images/yellow.gif") no-repeat right, -moz-linear-gradient(top, #f2f200 0%, #c1bb00 40%, #696b00 100%) fixed; /* FF3.6+ */
-	background: url("images/yellow.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f200), color-stop(40%,#c1bb00), color-stop(100%,#696b00)) fixed; /* Chrome,Safari4+ */
-	background: url("images/yellow.gif") no-repeat right, -webkit-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/yellow.gif") no-repeat right, -o-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* Opera 11.10+ */
-	background: url("images/yellow.gif") no-repeat right, -ms-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* IE10+ */
-	background: url("images/yellow.gif") no-repeat right, linear-gradient(to bottom, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* W3C */
+	background: url("images/yellow.png") no-repeat right, -moz-linear-gradient(top, #f2f200 0%, #c1bb00 40%, #696b00 100%) fixed; /* FF3.6+ */
+	background: url("images/yellow.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f200), color-stop(40%,#c1bb00), color-stop(100%,#696b00)) fixed; /* Chrome,Safari4+ */
+	background: url("images/yellow.png") no-repeat right, -webkit-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/yellow.png") no-repeat right, -o-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* Opera 11.10+ */
+	background: url("images/yellow.png") no-repeat right, -ms-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* IE10+ */
+	background: url("images/yellow.png") no-repeat right, linear-gradient(to bottom, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f200', endColorstr='#696b00',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	background-size: 30%;
 }
 
 body.purple
@@ -93,14 +93,14 @@ body.purple
 	color: #560049;
 	text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #ca00d1; /* Old browsers */
-	background: url("images/purple.gif") no-repeat right, -moz-linear-gradient(top, #ca00d1 0%, #a900b2 40%, #460049 100%) fixed; /* FF3.6+ */
-	background: url("images/purple.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ca00d1), color-stop(40%,#a900b2), color-stop(100%,#460049)) fixed; /* Chrome,Safari4+ */
-	background: url("images/purple.gif") no-repeat right, -webkit-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/purple.gif") no-repeat right, -o-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* Opera 11.10+ */
-	background: url("images/purple.gif") no-repeat right, -ms-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* IE10+ */
-	background: url("images/purple.gif") no-repeat right, linear-gradient(to bottom, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* W3C */
+	background: url("images/purple.png") no-repeat right, -moz-linear-gradient(top, #ca00d1 0%, #a900b2 40%, #460049 100%) fixed; /* FF3.6+ */
+	background: url("images/purple.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ca00d1), color-stop(40%,#a900b2), color-stop(100%,#460049)) fixed; /* Chrome,Safari4+ */
+	background: url("images/purple.png") no-repeat right, -webkit-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/purple.png") no-repeat right, -o-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* Opera 11.10+ */
+	background: url("images/purple.png") no-repeat right, -ms-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* IE10+ */
+	background: url("images/purple.png") no-repeat right, linear-gradient(to bottom, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ca00d1', endColorstr='#460049',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	background-size: 50%;
 }
 
 body.orange
@@ -108,12 +108,28 @@ body.orange
 	color: #5b2700;
 	text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
 	background: #ef6700; /* Old browsers */
-	background: url("images/orange.gif") no-repeat right, -moz-linear-gradient(top, #ef6700 0%, #b74c00 41%, #5b2700 100%) fixed; /* FF3.6+ */
-	background: url("images/orange.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ef6700), color-stop(41%,#b74c00), color-stop(100%,#5b2700)) fixed; /* Chrome,Safari4+ */
-	background: url("images/orange.gif") no-repeat right, -webkit-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/orange.gif") no-repeat right, -o-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* Opera 11.10+ */
-	background: url("images/orange.gif") no-repeat right, -ms-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* IE10+ */
-	background: url("images/orange.gif") no-repeat right, linear-gradient(to bottom, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* W3C */
+	background: url("images/orange.png") no-repeat right, -moz-linear-gradient(top, #ef6700 0%, #b74c00 41%, #5b2700 100%) fixed; /* FF3.6+ */
+	background: url("images/orange.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ef6700), color-stop(41%,#b74c00), color-stop(100%,#5b2700)) fixed; /* Chrome,Safari4+ */
+	background: url("images/orange.png") no-repeat right, -webkit-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/orange.png") no-repeat right, -o-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* Opera 11.10+ */
+	background: url("images/orange.png") no-repeat right, -ms-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* IE10+ */
+	background: url("images/orange.png") no-repeat right, linear-gradient(to bottom, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef6700', endColorstr='#5b2700',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	background-size: 40%;
 }
+
+body.white
+{
+	color: #7c7979;
+        text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
+	background: #d7d4d5; /* Old browsers */
+	background: url("images/white.png") no-repeat right, -moz-linear-gradient(top, #d7d4d5 0%, #aca7a8 75%, #3f3c3c 100%) fixed; /* FF3.6+ */
+	background: url("images/white.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d7d4d5), color-stop(75%,#aca7a8), color-stop(100%,#3f3c3c)) fixed; /* Chrome,Safari4+ */
+	background: url("images/white.png") no-repeat right, -webkit-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/white.png") no-repeat right, -o-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Opera 11.10+ */
+	background: url("images/white.png") no-repeat right, -ms-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* IE10+ */
+	background: url("images/white.png") no-repeat right, linear-gradient(to bottom, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d4d5', endColorstr='#3f3c3c',GradientType=0 ) fixed; /* IE6-9 */
+	background-size: 35%;
+}
+

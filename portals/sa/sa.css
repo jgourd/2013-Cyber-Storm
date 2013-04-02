@@ -26,6 +26,33 @@ body
 	text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
+#logos
+{
+	position: absolute;
+	width: 25%;
+	height: 25%;
+	opacity: 0.5;
+	filter:alpha(opacity=50);
+}
+
+#logos.top-right
+{
+	right: 6px;
+	top: 8px;
+}
+
+#logos.bottom-right
+{
+	right: 6px;
+	bottom: -139px;
+}
+
+#logos.bottom-left
+{
+	left: 9px;
+	bottom: -136px;
+}
+
 #red
 {
 	position: absolute;
@@ -68,7 +95,7 @@ body
 	height: 98%;
 }
 
-#other
+#white
 {
 	position: relative;
 	width: 99%;

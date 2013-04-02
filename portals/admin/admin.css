@@ -4,16 +4,17 @@ body
 	font-family: agency fb;
 	font-weight: bold;
 	font-size: 36pt;
-	color: black;
-	background: #affff9; /* Old browsers */
-	background: url("images/white.gif") no-repeat right, -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #3f0001 100%) fixed; /* FF3.6+ */
-	background: url("images/white.gif") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a90329), color-stop(44%,#8f0222), color-stop(100%,#3f0001)) fixed; /* Chrome,Safari4+ */
-	background: url("images/white.gif") no-repeat right, -webkit-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Chrome10+,Safari5.1+ */
-	background: url("images/white.gif") no-repeat right, -o-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* Opera 11.10+ */
-	background: url("images/white.gif") no-repeat right, -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* IE10+ */
-	background: url("images/white.gif") no-repeat right, linear-gradient(to bottom, #ffffff 0%,#dedede 44%,#a4a4a4 100%) fixed; /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#3f0001',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 20%;
+	color: #7c7979;
+        text-shadow: -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
+	background: #d7d4d5; /* Old browsers */
+	background: url("images/white.png") no-repeat right, -moz-linear-gradient(top, #d7d4d5 0%, #aca7a8 75%, #3f3c3c 100%) fixed; /* FF3.6+ */
+	background: url("images/white.png") no-repeat right, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d7d4d5), color-stop(75%,#aca7a8), color-stop(100%,#3f3c3c)) fixed; /* Chrome,Safari4+ */
+	background: url("images/white.png") no-repeat right, -webkit-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Chrome10+,Safari5.1+ */
+	background: url("images/white.png") no-repeat right, -o-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* Opera 11.10+ */
+	background: url("images/white.png") no-repeat right, -ms-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* IE10+ */
+	background: url("images/white.png") no-repeat right, linear-gradient(to bottom, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d4d5', endColorstr='#3f3c3c',GradientType=0 ) fixed; /* IE6-9 */
+	background-size: 35%;
 }
 
 a:link

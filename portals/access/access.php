@@ -29,7 +29,10 @@ END;
 		echo "\t\tYour team: $team<p/>\n\n";
 	
 		if (!isset($_SESSION["team"]))
+		{
 			login($team_id);
+			echo "\t\t</div>\n";
+		}
 		else
 		{
 			if ($_POST && $_POST["num"])

@@ -27,6 +27,9 @@
 		<div id="yellow"></div>
 		<div id="purple"></div>
 		<div id="orange"></div>
-		<div id="other"></div>
+		<div id="white"></div>
+		<div id="logos" class="top-right"><img src="images/logos-top-right.png"/></div>
+		<div id="logos" class="bottom-right"><img src="images/logos-bottom-right.png"/></div>
+		<div id="logos" class="bottom-left"><img src="images/logos-bottom-left.png"/></div>
 	</body>
 </html>
