@@ -1,6 +1,6 @@
 #!/bin/bash
 
-secs=5
+secs=20
 num_teams=7
 max_nodes=75
 

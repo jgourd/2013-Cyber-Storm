@@ -5,14 +5,14 @@ Raphael.registerFont({"w":146,"face":{"font-family":"agency fb","font-weight":70
 /************************************************************************************************************************************/
 
 // global screen and canvas settings
-var SCREEN_WIDTH = 1920;	// laptop is 1280
-var SCREEN_HEIGHT = 1200;	// laptop is 800 or 965
+var SCREEN_WIDTH = 1280;//1920;	// laptop is 1280
+var SCREEN_HEIGHT = 800;//1200;	// laptop is 800 or 965
 var TOP_MARGIN = 10;
 var LEFT_MARGIN = 0;
 
 // global SA settings
-var NODE_ROWS = 6;
-var NODE_COLS = 15;
+var NODE_ROWS = 4;//6;
+var NODE_COLS = 9;//15;
 var NODE_SPACING = 30;
 var NODE_RADIUS = 10;
 var ATTACK_NODE_RADIUS = SCREEN_WIDTH * 0.01;
