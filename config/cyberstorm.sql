@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: cyberstorm
 -- ------------------------------------------------------
--- Server version	5.5.29-0ubuntu0.12.04.1
+-- Server version	5.5.29-0ubuntu0.12.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -83,32 +83,6 @@ LOCK TABLES `announcements` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `attack_types`
---
-
-DROP TABLE IF EXISTS `attack_types`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `attack_types` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `name` enum('','NMAP') NOT NULL DEFAULT '',
-  `description` varchar(250) NOT NULL DEFAULT '',
-  `sentinel` varchar(250) NOT NULL DEFAULT '',
-  `enabled` enum('Y','N') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `attack_types`
---
-
-LOCK TABLES `attack_types` WRITE;
-/*!40000 ALTER TABLE `attack_types` DISABLE KEYS */;
-/*!40000 ALTER TABLE `attack_types` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `attacks`
 --
 
@@ -119,15 +93,12 @@ CREATE TABLE `attacks` (
   `id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
   `source_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `dest_id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `type_id` smallint(5) unsigned NOT NULL DEFAULT '0',
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `attacks_source_id` (`source_id`),
   KEY `attacks_dest_id` (`dest_id`),
-  KEY `attacks_type_id` (`type_id`),
-  CONSTRAINT `attacks_source_id` FOREIGN KEY (`source_id`) REFERENCES `nodes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `attacks_dest_id` FOREIGN KEY (`dest_id`) REFERENCES `nodes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `attacks_type_id` FOREIGN KEY (`type_id`) REFERENCES `attack_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `attacks_source_id` FOREIGN KEY (`source_id`) REFERENCES `nodes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -194,7 +165,7 @@ CREATE TABLE `ips` (
 
 LOCK TABLES `ips` WRITE;
 /*!40000 ALTER TABLE `ips` DISABLE KEYS */;
-INSERT INTO `ips` VALUES (1,'127.0.0.1',1,'2013-03-10 01:54:08',NULL);
+INSERT INTO `ips` VALUES (1,'127.0.0.1',7,'2013-03-10 01:54:08',NULL);
 /*!40000 ALTER TABLE `ips` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,9 +187,9 @@ CREATE TABLE `logins` (
   KEY `logins_team_id` (`team_id`),
   KEY `logins_vm_id` (`vm_id`),
   KEY `logins_service_id` (`service_id`),
+  CONSTRAINT `logins_service_id` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `logins_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `logins_vm_id` FOREIGN KEY (`vm_id`) REFERENCES `vms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `logins_service_id` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `logins_vm_id` FOREIGN KEY (`vm_id`) REFERENCES `vms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -277,8 +248,8 @@ CREATE TABLE `scores` (
   PRIMARY KEY (`id`),
   KEY `scores_team_id` (`team_id`),
   KEY `scores_service_id` (`service_id`),
-  CONSTRAINT `scores_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `scores_service_id` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `scores_service_id` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `scores_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -333,14 +304,14 @@ DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `color` enum('','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') NOT NULL DEFAULT '',
+  `color` enum('WHITE','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') DEFAULT NULL,
   `switch_ip` varchar(15) NOT NULL DEFAULT '',
   `sentinel` varchar(250) NOT NULL DEFAULT '',
   `score` smallint(10) NOT NULL DEFAULT '0',
   `challenges` smallint(5) unsigned NOT NULL DEFAULT '0',
   `enabled` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,12 +320,13 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'Anonymous','RED','10.0.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (2,'LulzSec','BLUE','10.1.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (3,'Milw0rm','GREEN','10.2.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (4,'P.H.I.R.M.','YELLOW','10.3.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (5,'L0pht','PURPLE','10.4.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (6,'NullCrew','ORANGE','10.5.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (1,'ARES','RED','10.0.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (2,'CHAOS','BLUE','10.1.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (3,'HERA','GREEN','10.2.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (4,'HERMES','YELLOW','10.3.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (5,'NYX','PURPLE','10.4.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (6,'ZEUS','ORANGE','10.5.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (7,'OLYMPUS','WHITE','10.6.0.2','',0,0,'Y');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -393,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-09 20:28:01
+-- Dump completed on 2013-04-04  9:44:45

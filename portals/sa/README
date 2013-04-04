@@ -1,9 +1,17 @@
 2013-Cyber-Storm
 ================
-config/		database configuration for the scores portal
-get_scores.php	gets scores and challenges from the database
-get_teams.php	gets team count from the database
-images/		contains images for the scores portal
-sa.css		stylesheet for the scores portal
-sa.js		scripts for the scores portal
-sa.php		frontend for the scores portal
+config/			database configuration for the sa portal
+get_nodes.php		gets nodes from the database
+get_scores.php		gets scores and challenges from the database
+get_teams.php		gets team count from the database
+images/			images for the sa portal
+random_attacks		generates random attacks from nodes in the database
+random_nodes		generates random nodes
+sa.css			stylesheet for the sa portal
+sa-images-avg.png	sa portal mockup with an average number of nodes
+sa-images-empty.png	sa portal mockup with no nodes
+sa-images-full.png	sa portal mockup with max nodes
+sa.js			scripts for the sa portal
+sa.js.old		old scripts for the sa portal
+sa-no-images-avg.png	sa portal mockup with no images and an average number of nodes
+sa.php			frontend for the sa portal

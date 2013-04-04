@@ -4,8 +4,10 @@ config/		database configuration for the scores portal
 get_scores.php	gets scores and challenges from the database
 get_teams.php	gets team count from the database
 images/		contains images for the scores portal
-random_scores	generates random scores and challenges
+random_scores	generates random scores and challenges won
 scores.css	stylesheet for the scores portal
 scores.js	scripts for the scores portal
+scores-misc.png	scores portal mockup with random scores and challenges won
 scores.php	frontend for the scores portal
+scores-zero.png	scores portal mockup with zeroed scores and challenges won
 zero_scores	zeroes out scores and challenges

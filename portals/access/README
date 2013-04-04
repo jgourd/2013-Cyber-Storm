@@ -3,4 +3,4 @@
 access.css	stylesheet for the access portal
 access.php	frontend for the access portal
 config/		database configuration for the access portal
-images/		contains images for the ip portal
+images/		images for the access portal

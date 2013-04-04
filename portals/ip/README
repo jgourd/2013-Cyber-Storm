@@ -1,7 +1,7 @@
 2013-Cyber-Storm
 ================
 config/		database configuration for the ip portal
-images/		contains images for the ip portal
+images/		images for the ip portal
 ip.css		stylesheet for the ip portal
 ip.js		scripts for the ip portal
 ip.php		frontend for the ip portal
