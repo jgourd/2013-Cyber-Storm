@@ -1,3 +1,9 @@
+@font-face
+{
+	font-family: "agency fb";
+	src: url(../AGENCYR.TTF);
+}
+
 body
 {
 	background: black;
