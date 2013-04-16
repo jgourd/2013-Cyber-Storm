@@ -27,5 +27,5 @@
 
 	}
 
-	echo $challenges;
+	echo ($id+"||"+$name+"||"+$desc+"||"+$points+"||"+$time_start+"||"+$winner_id);
 ?>

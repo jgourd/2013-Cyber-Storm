@@ -1,0 +1,100 @@
+body
+{
+	background: black;
+	color: white;
+	overflow: hidden;
+}
+
+#info
+{
+	width: 90%;
+	height: 10%;
+	border: 0px dotted #202020;
+}
+
+#container
+{
+	width: 95%;
+	height: 75%;
+	font-family: "agency fb";
+	font-weight: bold;
+	font-size: 48pt;
+	color: gray;
+	background-color: black;
+	text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+
+
+#bottom
+{
+	width: 90%;
+	height: 10%;
+}
+
+#logos.top-right
+{
+	right: 6px;
+	top: 8px;
+}
+
+#logos.bottom-right
+{
+	right: 6px;
+	bottom: -139px;
+}
+
+#logos.bottom-left
+{
+	left: 9px;
+	bottom: -136px;
+}
+
+#red
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#blue
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#green
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#yellow
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#purple
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#orange
+{
+	position: absolute;
+	width: 99%;
+	height: 98%;
+}
+
+#white
+{
+	position: relative;
+	width: 99%;
+	height: 98%;
+}

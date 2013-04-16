@@ -1,0 +1,4 @@
+2013-Cyber-Storm
+================
+config.php	database configuration (*note that the user cyberstorm with password cyberstorm must be added with full permissions to the database cyberstorm)
+db.php		database helper functions
