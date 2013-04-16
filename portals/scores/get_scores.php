@@ -3,29 +3,20 @@
 
 	db_connect();
 
+	$scores = "";
 	$challenges = "";
 
-	$r = db_query("SELECT * FROM challenges ORDER BY id;");
+	$r = db_query("SELECT score,challenges FROM teams WHERE enabled='Y' ORDER BY id;");
 	for ($i=0; $i<mysql_numrows($r); $i++)
 	{
 		if ($i > 0)
 		{
-			$challenges .= "||";
+			$scores .= ",";
+			$challenges .= ",";
 		}
-		$challenges .= mysql_result($r, $i, "id");
-		$challenges .= "|-";
-		$challenges .= mysql_result($r, $i, "name");
-		$challenges .= "|-";
-		$challenges .= mysql_result($r, $i, "description");
-		$challenges .= "|-";
-		$challenges .= mysql_result($r, $i, "points");
-		$challenges .= "|-";
-		$challenges .= mysql_result($r, $i, "timestamp_start");
-		$challenges .= "|-";
-		$challenges .= mysql_result($r, $i, "winner_id");
- 
-
+		$scores .= mysql_result($r, $i, "score");
+		$challenges .= mysql_result($r, $i, "challenges");
 	}
 
-	echo $challenges;
+	echo $scores . "|" . $challenges;
 ?>

@@ -19,7 +19,7 @@
 		<script type="text/javascript" src="../raphael-min.js"></script>
 		<script type="text/javascript" src="challenges.js"></script>
 		<script type="text/javascript" src="jquery.tipTip.js"></script>
-		<script type="text/javascript" src="kinetic.js"></script>
+		<script type="text/javascript" src="../kinetic.js"></script>
 		<link rel="stylesheet" type="text/css" href="challenges.css" />
 		<link rel="stylesheet" type="text/css" href="tipTip.css" />
 	</head>

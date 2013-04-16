@@ -1,1 +1,0 @@
-../scores/get_teams.php

@@ -1,5 +1,3 @@
-use DATABASE 'cyberstorm';
-
 insert into challenges (name,description,points,timestamp_start,winner_id) values ("Hack the wifi", "Hack wifi with ssd of hackMeNow", 50, null, 2);
 
 insert into challenges (name,description,points,timestamp_start,winner_id) values ("Hack the vm", "Hack blue team VM", 100, "00:00:00", null);
