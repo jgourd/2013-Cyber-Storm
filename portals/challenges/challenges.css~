@@ -99,35 +99,3 @@ body
 	width: 99%;
 	height: 98%;
 }
-
-
-  .tint {
-    overflow: hidden;
-    float: left;
-    background: blue;
-    margin: 0 20px 20px 0;
-  }
-  
-.t1 {
-    background: red;
-  }
-
-  .t2 {
-    background: blue;
-  }
-  
-  .t3 {
-    background: green;
-  }
-  
-  .t4 {
-    background: yellow;
-  }
-  
-  .t5 {
-    background: purple;
-  }
-  
-  .t6 {
-    background: orange;
-  }

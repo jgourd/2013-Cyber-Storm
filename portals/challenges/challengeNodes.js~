@@ -65,7 +65,7 @@ $.ajax(
 			var c_winner = fetched_nodes[j].split("|-")[5];
 
 			var node_x = 40+((j%num_columns)*120);
-			var node_y = 40+(Math.floor(j/num_columns)*120);
+			var node_y = (stage.getHeight() / 2 - 59)+(Math.floor(j/num_columns)*120);
 			var challengeNode = new Kinetic.Image({
 				x: node_x,
 				y: node_y,
