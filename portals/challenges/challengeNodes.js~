@@ -14,28 +14,45 @@ team_4_symbol.src = 'images/team_4.png';
 team_5_symbol.src = 'images/team_5.png';
 team_6_symbol.src = 'images/team_6.png';
 
+var nameList = new Array();
 var descList = new Array();
-      function writeMessage(messageLayer, message) {
-        var context = messageLayer.getContext();
-        messageLayer.clear();
-        context.font = '18pt Calibri';
-        context.fillStyle = 'white';
-        context.fillText(descList[message.targetNode.id], 10, 25);
-      }
-      var stage = new Kinetic.Stage({
-        container: 'container',
-        width: 1024,
-        height: 1000
-      });
-	var shapesLayer = new Kinetic.Layer();
-	var messageLayer = new Kinetic.Layer();
-	var layer = new Kinetic.Layer();
+var pointsList = new Array();
+var winnerList = new Array();
+function writeMessage(messageLayer, message) {
+	var context = messageLayer.getContext();
+	messageLayer.clear();
+	context.font = '20pt Calibri';
+	context.fillStyle = 'gray';
+	context.fillText("Challenge : "+nameList[message.targetNode.id], 10, 25);
+	context.font = '18pt Calibri';
+	context.fillStyle = 'white';
+	context.fillText("Contract : "+descList[message.targetNode.id], 10, 55);
+	context.font = '18pt Calibri';
+	context.fillStyle = 'green';
+	context.fillText("Points awarded : "+pointsList[message.targetNode.id], 10, 85);
+	if(winnerList[message.targetNode.id]!="")
+	{
+		context.font = '18pt Calibri';
+		context.fillStyle = 'red';
+		context.fillText("Points awarded : "+winnerList[message.targetNode.id], 10, 115);
+	}
+}
 
-	var imageObj = new Image();
-	imageObj.onload = function() {
-		pullChallenges();
+var stage = new Kinetic.Stage({
+	container: 'container',
+	width: 1024,
+	height: 1000
+});
+var shapesLayer = new Kinetic.Layer();
+var messageLayer = new Kinetic.Layer();
+var messageLayer2 = new Kinetic.Layer();
+var layer = new Kinetic.Layer();
 
-      };
+var imageObj = new Image();
+imageObj.onload = function() {
+	pullChallenges();
+
+};
 
 
 function pullChallenges(){
@@ -63,9 +80,10 @@ $.ajax(
 			var c_points = fetched_nodes[j].split("|-")[3];
 			var c_timeStart = fetched_nodes[j].split("|-")[4];
 			var c_winner = fetched_nodes[j].split("|-")[5];
+			var c_winnerName = fetched_nodes[j].split("|-")[6];
 
 			var node_x = 40+((j%num_columns)*120);
-			var node_y = (stage.getHeight() / 2 - 59)+(Math.floor(j/num_columns)*120);
+			var node_y = 150+(Math.floor(j/num_columns)*120);
 			var challengeNode = new Kinetic.Image({
 				x: node_x,
 				y: node_y,
@@ -76,8 +94,15 @@ $.ajax(
 				strokeWidth:3,
 				strokeEnabled: true
 			});
-			var desc = new String(c_name + " : " +c_desc + " FOR "+c_points + " points. Winner = " + c_winner);
+			//var desc = new String(c_name + " <\\r>: " +c_desc + " FOR "+c_points + " points. Winner = " + c_winner);
+			var name = new String(c_name);
+			var desc = new String(c_desc);
+			var points = new String(c_points);
+			var winnerName = new String(c_winnerName);
+			nameList[j]=name;
 			descList[j]=desc;
+			pointsList[j]=points;
+			winnerList[j]=winnerName;
 			challengeNode.id=j;
 //passes a mouse event. we use target node to detect which description to display
 			challengeNode.on('mousemove', function(j) { 
