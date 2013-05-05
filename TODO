@@ -1,0 +1,41 @@
+IRC
+	setup/test channel/password server
+	setup/test IRC server
+challenges
+	setup/test add challenge
+	setup/test close challenge (mac address or team specified as winner)
+	setup chellenge VMs
+		Kioptrix level 1-4
+		Metasploitable 2
+		TimeLock
+		others?
+	determine online challenges
+		Semtex levels 0-4->5
+		Krypton levels 0-5->6
+		Natas (all levels)
+	test SCADA challenges
+attacks
+	frontend to grab attacks and visualize them
+	backend to detect attacks
+nodes
+	backend to detect nodes
+VMs
+	determine best way to issue VMs (fetch on server, distribute on USB, etc)
+	10am VM: Ubuntu 12.04.2 LTS
+		goal is to install HTTP, FTP, SSH, MySQL
+	noon VM: Slackware 14.0
+		goal is to install HTTP, FTP, SSH
+	2pm VM: FreeBSD 9.1-RELEASE
+		goal is to install HTTP, FTP, SSH
+IPs
+	determine whether or not to assign IPs
+	assign initial IPs
+		switches
+		challenge VMs
+		issued VMs
+scoring
+	automate some challenge scoring (e.g., issued VMs)
+Android apps
+	servers
+	test
+
