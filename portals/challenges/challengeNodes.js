@@ -22,18 +22,18 @@ function writeMessage(messageLayer, message) {
 	var context = messageLayer.getContext();
 	messageLayer.clear();
 	context.font = '20pt Calibri';
-	context.fillStyle = 'gray';
+	context.fillStyle = 'white';
 	context.fillText("Challenge : "+nameList[message.targetNode.id], 10, 25);
 	context.font = '18pt Calibri';
 	context.fillStyle = 'white';
 	context.fillText("Contract : "+descList[message.targetNode.id], 10, 55);
 	context.font = '18pt Calibri';
-	context.fillStyle = 'green';
+	context.fillStyle = 'white';
 	context.fillText("Points awarded : "+pointsList[message.targetNode.id], 10, 85);
 	if(winnerList[message.targetNode.id]!="")
 	{
 		context.font = '18pt Calibri';
-		context.fillStyle = 'red';
+		context.fillStyle = 'white';
 		context.fillText("Winner : "+winnerList[message.targetNode.id], 10, 115);
 	}
 }
@@ -83,7 +83,7 @@ $.ajax(
 			var c_winnerName = fetched_nodes[j].split("|-")[6];
 
 			var node_x = 40+((j%num_columns)*120);
-			var node_y = 150+(Math.floor(j/num_columns)*120);
+			var node_y = 150+(Math.floor(j/num_columns)*140);
 			var challengeNode = new Kinetic.Image({
 				x: node_x,
 				y: node_y,
@@ -99,6 +99,29 @@ $.ajax(
 			var desc = new String(c_desc);
 			var points = new String(c_points);
 			var winnerName = new String(c_winnerName);
+
+			var displayName = new String(name);
+			var maxCharLength = 10;
+			if(displayName.length>maxCharLength)
+				displayName=displayName.substr(0,maxCharLength);
+			var simpleLabel = new Kinetic.Label({
+				x: node_x+5,
+				y: node_y-30,
+				width: 40,
+				opacity: 0.75,
+				text: {
+				  text: displayName,
+				  fontFamily: 'Calibri',
+				  fontSize: 18,
+				  padding: 5,
+				  fill: 'white',
+				  align: 'center'
+				},
+				rect: {
+				  fill: 'black',
+				}
+			});
+
 			nameList[j]=name;
 			descList[j]=desc;
 			pointsList[j]=points;
@@ -109,6 +132,7 @@ $.ajax(
 				writeMessage(messageLayer, j);
 			});
 			layer.add(challengeNode);
+			layer.add(simpleLabel);
 			checkWinners(c_winner,j, node_x, node_y);
 	
 		}
