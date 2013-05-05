@@ -29,7 +29,7 @@
 				if ($_POST && $_POST["mac"])
 				{
 					$mac = $_POST["mac"];
-					$r = db_query("SELECT t.name FROM teams t, nodes n WHERE n.mac='$mac' AND n.team_id=t.id GROUP BY n.mac ORDER by n.timestamp_up DESC");
+					$r = db_query("SELECT t.name FROM teams t, nodes n WHERE n.mac='$mac' AND n.team_id=t.id ORDER by n.timestamp_up DESC");
 					if ($r && mysql_numrows($r) > 0)
 					{
 						$name = mysql_result($r, 0, "t.name");
