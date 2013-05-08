@@ -5,12 +5,15 @@ acl/			access control lists for portals
 admin/			admin portal
 AGENCYB.TTF		scores font (bold)
 AGENCYR.TTF		scores font (regular)
+android/		android app portal (via ftp)
+challenges/		challenge portal
 images/			team images
 ip/			ip portal
+irc/			IRC portal
 jquery-1.9.1.min.js	jQuery library
+jquery.tipTip.js	tooltip plugin for jQuery
 key			router ssh key
 kinetic.js		kinetic HTML5 library
-old/			old access portals
 raphael-min.js		raphael vector library
 sa/			situational awareness portal
 scores/			scores portal
