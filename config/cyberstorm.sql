@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: cyberstorm
 -- ------------------------------------------------------
--- Server version	5.5.29-0ubuntu0.12.04.2
+-- Server version	5.5.31-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -48,12 +48,12 @@ CREATE TABLE `acl` (
 
 LOCK TABLES `acl` WRITE;
 /*!40000 ALTER TABLE `acl` DISABLE KEYS */;
-INSERT INTO `acl` VALUES (1,1,'*E23149D4931DA6B3ED39B9F8228919EA20C55B18');
-INSERT INTO `acl` VALUES (2,2,'*452E1F79E574CFF6CE1F67575B985550958F8E4E');
-INSERT INTO `acl` VALUES (3,3,'*E2A6B02D26FA596F6B4905339924C99C667C93E7');
-INSERT INTO `acl` VALUES (4,4,'*117DB67087A874F3B39A0BEF9953D19FE6194AEF');
-INSERT INTO `acl` VALUES (5,5,'*B8A4AE2B88CD1C48A0C6A09724BFFDAFC6C07ADF');
-INSERT INTO `acl` VALUES (6,6,'*CB79338570DC0D14ECF5507ADEB1FCBFF3F0B24B');
+INSERT INTO `acl` VALUES (1,1,'*14C0E0E3676FF56D27AEEDF53A212EA67B63DB77');
+INSERT INTO `acl` VALUES (2,2,'*549946B87E35711AC2DD79A18C8A9FF05026066A');
+INSERT INTO `acl` VALUES (3,3,'*CB784E1979C6B1D5C36C8332E13D73C493AE804B');
+INSERT INTO `acl` VALUES (4,4,'*D44BBF6DA5586562FB4A16D4019EA704DC9CFC0B');
+INSERT INTO `acl` VALUES (5,5,'*9DE88FE59A385D7AC8F8F0CD1F373D75AF7D055F');
+INSERT INTO `acl` VALUES (6,6,'*CBA7C6E6A9B84E10601164ABC88B3304422D88C0');
 /*!40000 ALTER TABLE `acl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,27 +81,6 @@ LOCK TABLES `announcements` WRITE;
 /*!40000 ALTER TABLE `announcements` DISABLE KEYS */;
 /*!40000 ALTER TABLE `announcements` ENABLE KEYS */;
 UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `log` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `message` varchar(250) NOT NULL DEFAULT '',
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `log`
---
-
-LOCK TABLES `log` WRITE;
-/*!40000 ALTER TABLE `log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `log` ENABLE KEYS */;
-UNLOCK TABLES;
-
 
 --
 -- Table structure for table `attacks`
@@ -188,6 +167,30 @@ LOCK TABLES `ips` WRITE;
 /*!40000 ALTER TABLE `ips` DISABLE KEYS */;
 INSERT INTO `ips` VALUES (1,'127.0.0.1',7,'2013-03-10 01:54:08',NULL);
 /*!40000 ALTER TABLE `ips` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `log`
+--
+
+DROP TABLE IF EXISTS `log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `log` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `message` varchar(250) NOT NULL DEFAULT '',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log`
+--
+
+LOCK TABLES `log` WRITE;
+/*!40000 ALTER TABLE `log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -325,14 +328,14 @@ DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `color` enum('WHITE','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') DEFAULT NULL,
+  `color` enum('WHITE','BLACK','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') NOT NULL,
   `switch_ip` varchar(15) NOT NULL DEFAULT '',
   `sentinel` varchar(250) NOT NULL DEFAULT '',
   `score` smallint(10) NOT NULL DEFAULT '0',
   `challenges` smallint(5) unsigned NOT NULL DEFAULT '0',
   `enabled` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,13 +344,14 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'ARES','RED','10.0.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (2,'CHAOS','BLUE','10.1.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (3,'HERA','GREEN','10.2.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (4,'HERMES','YELLOW','10.3.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (5,'NYX','PURPLE','10.4.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (6,'ZEUS','ORANGE','10.5.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (7,'OLYMPUS','WHITE','10.6.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (1,'ARES','RED','10.1.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (2,'CHAOS','BLUE','10.2.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (3,'HERA','GREEN','10.3.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (4,'HERMES','YELLOW','10.4.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (5,'NYX','PURPLE','10.5.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (6,'ZEUS','ORANGE','10.6.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (7,'OLYMPUS','WHITE','10.0.0.2','',0,0,'Y');
+INSERT INTO `teams` VALUES (8,'ARTEMIS','BLACK','10.7.0.2','',0,0,'N');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,4 +390,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-04-04  9:44:45
+-- Dump completed on 2013-05-08 13:16:56
