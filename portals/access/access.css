@@ -40,7 +40,7 @@ body.red
 	background: url("images/red.png") no-repeat right, -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* IE10+ */
 	background: url("images/red.png") no-repeat right, linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#3f0001 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#3f0001',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 35%;
+	background-size: contain;
 }
 
 body.blue
@@ -55,7 +55,7 @@ body.blue
 	background: url("images/blue.png") no-repeat right, -ms-linear-gradient(top, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* IE10+ */
 	background: url("images/blue.png") no-repeat right, linear-gradient(to bottom, #0455e0 0%,#033db2 40%,#020087 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0455e0', endColorstr='#020087',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 40%;
+	background-size: contain;
 }
 
 body.green
@@ -70,7 +70,7 @@ body.green
 	background: url("images/green.png") no-repeat right, -ms-linear-gradient(top, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* IE10+ */
 	background: url("images/green.png") no-repeat right, linear-gradient(to bottom, #04e526 0%,#03b232 40%,#00490c 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#04e526', endColorstr='#00490c',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 30%;
+	background-size: contain;
 }
 
 body.yellow
@@ -85,7 +85,7 @@ body.yellow
 	background: url("images/yellow.png") no-repeat right, -ms-linear-gradient(top, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* IE10+ */
 	background: url("images/yellow.png") no-repeat right, linear-gradient(to bottom, #f2f200 0%,#c1bb00 40%,#696b00 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f200', endColorstr='#696b00',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 30%;
+	background-size: contain;
 }
 
 body.purple
@@ -100,7 +100,7 @@ body.purple
 	background: url("images/purple.png") no-repeat right, -ms-linear-gradient(top, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* IE10+ */
 	background: url("images/purple.png") no-repeat right, linear-gradient(to bottom, #ca00d1 0%,#a900b2 40%,#460049 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ca00d1', endColorstr='#460049',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 50%;
+	background-size: contain;
 }
 
 body.orange
@@ -115,7 +115,7 @@ body.orange
 	background: url("images/orange.png") no-repeat right, -ms-linear-gradient(top, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* IE10+ */
 	background: url("images/orange.png") no-repeat right, linear-gradient(to bottom, #ef6700 0%,#b74c00 41%,#5b2700 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef6700', endColorstr='#5b2700',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 40%;
+	background-size: contain;
 }
 
 body.white
@@ -130,6 +130,6 @@ body.white
 	background: url("images/white.png") no-repeat right, -ms-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* IE10+ */
 	background: url("images/white.png") no-repeat right, linear-gradient(to bottom, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d4d5', endColorstr='#3f3c3c',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 35%;
+	background-size: contain;
 }
 

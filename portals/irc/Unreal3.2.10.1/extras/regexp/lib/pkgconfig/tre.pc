@@ -1,0 +1,10 @@
+prefix=/home/jgourd/2013-Cyber-Storm/portals/irc/Unreal3.2.10.1/extras/regexp
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: TRE
+Description: TRE regexp matching library
+Version: 0.8.0
+Libs: -L${libdir} -ltre   
+Cflags: -I${includedir} 

@@ -19,7 +19,7 @@
 
 END;
 
-	$r = db_query("SELECT i.team_id,t.name,t.color FROM ips i,teams t WHERE i.ip='$ip' AND i.team_id = t.id;");
+	$r = db_query("SELECT i.team_id,t.name,t.color FROM ips i,teams t WHERE i.ip='$ip' AND i.timestamp_down IS NULL AND i.team_id = t.id;");
 	if ($r && mysql_numrows($r) > 0)
 	{
 		$team_id = mysql_result($r, 0, "team_id");
@@ -71,13 +71,13 @@ END;
 
 			echo "\t\t\tYou currently have $num_ips active IP address(es)<br/>assigned to your team<p/>\n";
 			echo "\t\t\tHow many more IP addresses do you want?<br/>\n";
-			echo "\t\t\t<form method=\"post\">\n";
-			echo "\t\t\t\t<select name=\"num\">\n";
+//			echo "\t\t\t<form method=\"post\">\n";
+			echo "\t\t\t\t<select id=\"num\" name=\"num\">\n";
 			for ($i=1; $i<=256; $i++)
 				echo "\t\t\t\t\t<option value=\"$i\">$i</option>\n";
 			echo "\t\t\t\t</select>\n";
 			echo "\t\t\t\t<input type=\"submit\" id=\"generate\" value=\"Generate\"/>\n";
-			echo "\t\t\t</form>\n";
+//			echo "\t\t\t</form>\n";
 			echo"\t\t</div>\n\n";
 
 			echo "\t\t<div id=\"ips\">\n";

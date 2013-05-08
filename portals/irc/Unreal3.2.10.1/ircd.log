@@ -1,0 +1,37 @@
+[Wed May  8 12:21:14 2013] - UnrealIRCd started.
+[Wed May  8 12:21:14 2013] - TIME SYNCH: IRCd clock succesfully synchronized to known good time source [offset: 22143, was: 0].
+[Wed May  8 12:24:37 2013] - UnrealIRCd started.
+[Wed May  8 12:24:38 2013] - TIME SYNCH: IRCd clock succesfully synchronized to known good time source [offset: 22142, was: 22143].
+[Wed May  8 18:35:29 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:36:31 2013] - Disconnect - (0:1:3) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:36:35 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:37:49 2013] - Disconnect - (0:1:15) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:38:02 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:38:52 2013] - Disconnect - (0:0:52) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:38:54 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:39:29 2013] - Connect - jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:39:38 2013] - Disconnect - (0:0:10) jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:39:46 2013] - Disconnect - (0:0:53) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 12:30:56 2013] - UnrealIRCd started.
+[Wed May  8 12:30:56 2013] - TIME SYNCH: IRCd clock succesfully synchronized to known good time source [offset: 22142, was: 22142].
+[Wed May  8 18:40:02 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:40:18 2013] - Connect - jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:40:31 2013] - Disconnect - (0:0:20) jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:40:43 2013] - Disconnect - (0:0:42) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:40:45 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:41:09 2013] - Connect - jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:41:15 2013] - Disconnect - (0:0:7) jgourd_!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:41:19 2013] - Disconnect - (0:0:35) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:41:23 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 12:35:28 2013] - UnrealIRCd started.
+[Wed May  8 12:35:28 2013] - TIME SYNCH: IRCd clock succesfully synchronized to known good time source [offset: 22143, was: 22142].
+[Wed May  8 18:44:41 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:44:48 2013] - Disconnect - (0:0:9) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 12:36:00 2013] - UnrealIRCd started.
+[Wed May  8 12:36:00 2013] - TIME SYNCH: IRCd clock succesfully synchronized to known good time source [offset: 22142, was: 22143].
+[Wed May  8 18:45:32 2013] - Connect - jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:46:21 2013] - Connect - jgourd_!jgourd@localhost [VHOST cs-F8E880CB]
+[Wed May  8 18:47:33 2013] - Disconnect - (0:1:14) jgourd_!jgourd@localhost [VHOST cs-F8E880CB]
+[Wed May  8 18:48:17 2013] - Connect - jgourd_!jgourd@localhost [VHOST cs-F8E880CB]
+[Wed May  8 18:49:33 2013] - Disconnect - (0:4:2) jgourd!jgourd@WiFi-node-1642.LaTech.edu [VHOST cs-9DEB9FF2.latech.edu]
+[Wed May  8 18:49:41 2013] - Disconnect - (0:1:25) jgourd_!jgourd@localhost [VHOST cs-F8E880CB]

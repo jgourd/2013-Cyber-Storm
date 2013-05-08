@@ -1,6 +1,3 @@
-IRC
-	setup/test channel/password server
-	setup/test IRC server
 challenges
 	setup/test add challenge
 	setup/test close challenge (mac address or team specified as winner)
@@ -38,4 +35,3 @@ scoring
 Android apps
 	servers
 	test
-
