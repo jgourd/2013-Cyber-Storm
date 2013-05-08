@@ -39,7 +39,8 @@
 			if ($id <= $num_teams)
 			{
 				echo "\t\t\t<div id=\"team\" class=\"" . strtolower($color) . "\">\n";
-				echo "\t\t\t\t<div id=\"challenge\" class=\"challenge$id\">$challenges</div>\n";
+//				echo "\t\t\t\t<div id=\"challenge\" class=\"challenge$id\">$challenges</div>\n";
+				echo "\t\t\t\t<div id=\"challenge\" class=\"challenge$id\"></div>\n";
 				echo "\t\t\t\t<div id=\"name\" class=\"" . strtolower($color) . "\">$team_name</div>\n";
 				echo "\t\t\t\t<div id=\"score\" class=\"score$id\">$score</div>\n";
 				echo "\t\t\t</div>\n";
@@ -48,6 +49,11 @@
 
 		echo "\t\t</div>\n";
 	}
+	echo "\t\t<div id=\"announcement-table\">\n";
+	echo "\t\t\t<div id=\"announcement-row\">\n";
+	echo "\t\t\t\t<div id=\"announcement\"></div>\n";
+	echo "\t\t\t</div>\n";
+	echo "\t\t</div>\n";
 ?>
 	</body>
 </html>

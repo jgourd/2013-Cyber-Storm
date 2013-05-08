@@ -82,6 +82,11 @@
 						echo "<a href=\"?wish=dump_table&table=nodes\"> (show)</a><p/>\n\n";
 						continue;
 					}
+					else if ($table == "announcements")
+					{
+						echo "<a href=\"?wish=dump_table&table=announcements\"> (show)</a><p/>\n\n";
+						continue;
+					}
 
 					echo "\n";
 
@@ -110,7 +115,7 @@
 				{
 					$team_id = $_POST["team_id"];
 					$points = $_POST["points"];
-					$message = $_POST["message"];
+					$message = str_replace("'", "''", $_POST["message"]);
 					$r = db_query("SELECT name,color,score FROM teams WHERE id=$team_id");
 					$c = mysql_result($r, 0, "score");
 					$c = $c + $points;
@@ -118,7 +123,8 @@
 					$team_color = mysql_result($r, 0, "color");
 					$r = db_query("UPDATE teams set score=$c WHERE id=$team_id");
 					$r2 = db_query("INSERT INTO log VALUES (NULL,'$points points awarded to $team_name($team_color): $message', NULL)");
-					if ($r && $r2)
+					$r3 = db_query("INSERT INTO announcements VALUES (NULL, '$team_name gets $points points...$message', NULL, 30)");
+					if ($r && $r2 && $r3)
 						echo "\t\tPoints awarded successfully.<p/>\n";
 					else
 						echo "\t\tERROR awarding points.<p/>\n";
@@ -173,12 +179,13 @@
 			case "add_challenge":
 				if ($_POST && ($_POST["name"] && $_POST["description"] && $_POST["points"]))
 				{
-					$name = $_POST["name"];
+					$name = str_replace("'", "''", $_POST["name"]);
 					$points = $_POST["points"];
-					$description = $_POST["description"];
+					$description = str_replace("'", "''", $_POST["description"]);
 					$r = db_query("INSERT INTO challenges VALUES (NULL, '$name', '$description', $points, NULL, NULL)");
 					$r2 = db_query("INSERT INTO log VALUES (NULL,'$points point challenge added: $name', NULL)");
-					if ($r && $r2)
+					$r3 = db_query("INSERT INTO announcements VALUES (NULL, 'New challenge ($name) for $points points: $description', NULL, 30)");
+					if ($r && $r2 && $r3)
 						echo "\t\tChallenge added successfully.<p/>\n";
 					else
 						echo "\t\tERROR adding challenge.<p/>\n";
@@ -230,7 +237,8 @@
 							$c = $c + mysql_result($r3, 0, "points");
 							$r3 = db_query("UPDATE teams set score=$c WHERE id=$winner_id");
 							$r4 = db_query("INSERT INTO log VALUES (NULL,'Challenge ended: $challenge_name (winner: $team_name)',NULL)");
-							if ($r && $r2 && $r3 && $r4)
+							$r5 = db_query("INSERT INTO announcements VALUES (NULL, '$team_name wins challenge: $challenge_name!', NULL, 30)");
+							if ($r && $r2 && $r3 && $r4 && $r5)
 								echo "\t\tChallenge closed successfully.<p/>\n";
 							else
 								echo "\t\tERROR closing challenge.<p/>\n";
@@ -280,7 +288,9 @@
 			case "add_announcement":
 				if ($_POST && ($_POST["message"] && $_POST["duration"]))
 				{
-					$r = db_query("INSERT INTO announcements VALUES (NULL, '" . $_POST["message"] . "', NULL, " . $_POST["duration"] . ")");
+					$message = str_replace("'", "''", $_POST["message"]);
+					$duration = $_POST["duration"];
+					$r = db_query("INSERT INTO announcements VALUES (NULL, '$message', NULL, $duration)");
 					if ($r)
 						echo "\t\tAnnouncement added successfully.<p/>\n";
 					else

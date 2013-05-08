@@ -14,10 +14,11 @@ body
 	background: url("images/white.png") no-repeat right, -ms-linear-gradient(top, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* IE10+ */
 	background: url("images/white.png") no-repeat right, linear-gradient(to bottom, #d7d4d5 0%,#aca7a8 75%,#3f3c3c 100%) fixed; /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d7d4d5', endColorstr='#3f3c3c',GradientType=0 ) fixed; /* IE6-9 */
-	background-size: 35%;
+/*	background-size: 35%;*/
+	background-size: contain;
 }
 
-a:link
+a:link, a:visited
 {
 	color: black;
 }

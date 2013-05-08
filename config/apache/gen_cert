@@ -31,7 +31,7 @@ echo "*-Setting permissions..."
 chmod 600 $domain.*
 #move files to proper folder
 echo "*-Moving files..."
-mv $domain.key $domain.crt /etc/apache2/ssl/
+cp $domain.key $domain.crt /etc/apache2/ssl/
 #restart apache
 echo "*-Restarting apache..."
 /etc/init.d/apache2 restart

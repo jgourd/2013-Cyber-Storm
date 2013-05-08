@@ -5,6 +5,8 @@ var SCORE_INCREMENT = 10;
 
 jQuery(document).ready(function()
 {
+	$(announcement).hide();
+
 	$.ajax(
 	{
 		url: "get_teams.php",
@@ -17,6 +19,22 @@ jQuery(document).ready(function()
 
 	refresh = function()
 	{
+		$.ajax(
+		{
+			url: "get_announcements.php",
+			type: "POST",
+			success: function(data)
+			{
+				if (data == "")
+					$(announcement).fadeOut(500);
+				else
+				{
+					$(announcement).text(data);
+					$(announcement).fadeIn(500);
+				}
+			}
+		});
+
 		$.ajax(
 		{
 			url: "get_scores.php",
@@ -34,7 +52,7 @@ jQuery(document).ready(function()
 					var new_score = scores[i];
 					var increment = SCORE_INCREMENT;
 
-					$(challenge_id).text(challenges[i]);
+//					$(challenge_id).text(challenges[i]);
 					if (new_score != cur_score)
 					{
 						if (new_score < cur_score)

@@ -32,7 +32,7 @@ body
 {
 	float: left;
 	width: 21%;
-	height: 40%;
+	height: 30%;
 	margin-left: 0.05em;
 	font-family: agency fb;
 	font-weight: bold;
@@ -45,7 +45,7 @@ body
 {
 	float: right;
 	width: 76%;
-	height: 40%;
+	height: 30%;
 	margin-right: 0.05em;
 	font-family: agency fb;
 	font-weight: bold;
@@ -184,4 +184,39 @@ body
 	background: url("images/orange.png") no-repeat center, linear-gradient(to bottom, #ef6700 0%,#b74c00 41%,#5b2700 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef6700', endColorstr='#5b2700',GradientType=0 ); /* IE6-9 */
 	background-size: contain;
+}
+
+#announcement-table
+{
+	display: table;
+	position: fixed;
+	top:10%;
+	left: 10%;
+	width: 80%;
+	height: 80%;
+}
+
+#announcement-row
+{
+	display: table-row;
+	width: 100%;
+	height: 100%;
+}
+
+#announcement
+{
+	display: table-cell;
+	border: 1px solid yellow;
+	width: 100%;
+	height: 100%;
+	font-family: agency fb;
+	font-weight: bold;
+	font-size: 72pt;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	background-color: black;
+	filter: alpha(opacity=90);
+	opacity: 0.9;
 }
