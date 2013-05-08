@@ -1,6 +1,4 @@
 challenges
-	setup/test add challenge
-	setup/test close challenge (mac address or team specified as winner)
 	setup chellenge VMs
 		Kioptrix level 1-4
 		Metasploitable 2

@@ -1,0 +1,2 @@
+we're using vsftpd with anonymous logins to grab the apk files
+anonymous root is in /home/ftp
