@@ -35,7 +35,7 @@ END;
 		}
 		else
 		{
-			if ($_POST && $_POST["num"])
+			if ($_POST)
 			{
 				foreach ($_POST as $k=>$v)
 				{
@@ -49,14 +49,11 @@ END;
 						$sql .= "password='";
 					$sql .= mysql_real_escape_string($v) . "' WHERE id=$id;";
 
-					echo $sql;
-					//db_query($sql);
+					db_query($sql);
 				}
 			}
-			else
 			{
-/*
-				$result = db_query("SELECT * FROM `teams` WHERE `description`='RED';");
+				$result = db_query("SELECT * FROM teams WHERE name='$team';");
 				if (mysql_numrows($result) == 0)
 					die("ERROR: Can't fetch team information.");
 
@@ -64,23 +61,21 @@ END;
 				$description = mysql_result($result, 0, "description");
 				$subnet = mysql_result($result, 0, "subnet");
 
-				echo "\t\t<h2>$name: $subnet.0.0/16</h2>\n";
-				echo "\t\t<a href=\"../key\"><font color=\"gray\">[White SSH key]</font></a><br/>\n";
-				echo "\t\t<a href=\"http://" . $_SERVER["SERVER_ADDR"] . ":1337/viz/scores.swf\">Scores</a>\n";
+				echo "\t\t<a href=\"/ip/ip.php\">IPs</a> | <a href=\"/scores/scores.php\">Scores</a> | <a href=\"/challenges/challenges.php\">Challenges</a>\n";
 				echo "\t\t<hr/>\n";
 				echo "\t\t<form method=\"post\">\n";
 
-				$os = db_query("SELECT id,name,ip FROM os WHERE enabled='Y'");
-				if (mysql_numrows($os) == 0)
+				$vm = db_query("SELECT vm.id,vm.name,tvm.ip FROM vms vm,team_vms tvm WHERE tvm.team_id=$team_id AND tvm.vm_id = vm.id AND vm.enabled='Y' GROUP BY vm.name ORDER BY id");
+				if (mysql_numrows($vm) == 0)
 					die("ERROR: Can't fetch OS types.");
 
-				for ($i=0; $i<mysql_numrows($os); $i++)
+				for ($i=0; $i<mysql_numrows($vm); $i++)
 				{
-					$os_id = mysql_result($os, $i, "id");
-					$os_name = mysql_result($os, $i, "name");
-					$os_ip = mysql_result($os, $i, "IP");
+					$vm_id = mysql_result($vm, $i, "id");
+					$vm_name = mysql_result($vm, $i, "name");
+					$vm_ip = mysql_result($vm, $i, "IP");
 
-					echo "\t\t\t<h3>$os_name ($subnet.$os_ip)</h3><p/>\n";
+					echo "\t\t\t<h3>$vm_name ($vm_ip)</h3><p/>\n";
 
 					$service = db_query("SELECT id,name from services WHERE name<>'HTTP' AND enabled='Y'");
 					if (mysql_numrows($service) == 0)
@@ -93,7 +88,7 @@ END;
 						$s_id = mysql_result($service, $j, "id");
 						$s_name = mysql_result($service, $j, "name");
 
-						$scoring = db_query("SELECT DISTINCT id,username,password FROM logins WHERE team_id=(SELECT id FROM teams WHERE description='$description') AND os_id=$os_id AND service_id=$s_id;");
+						$scoring = db_query("SELECT DISTINCT id,username,password FROM logins WHERE team_vm_id=(SELECT id FROM team_vms WHERE team_id=$team_id AND vm_id=$vm_id) AND service_id=$s_id");
 						if (mysql_numrows($scoring) == 0)
 							die("ERROR: Can't fetch scoring information.");
 
@@ -108,7 +103,6 @@ END;
 
 				echo "\t\t\t<input type=\"submit\" value=\"SUBMIT\"/>\n";
 				echo "\t\t</form>\n";
-*/
 			}
 		}
 	}

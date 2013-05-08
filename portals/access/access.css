@@ -6,7 +6,7 @@ body
 	font-size: 36pt;
 }
 
-a:link
+a:link, a:visited
 {
 	color: white;
 }

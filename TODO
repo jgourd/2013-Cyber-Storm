@@ -13,7 +13,7 @@ attacks
 	frontend to grab attacks and visualize them
 	backend to detect attacks
 nodes
-	backend to detect nodes
+	test backend to make sure it detects properly when router is enabled
 VMs
 	determine best way to issue VMs (fetch on server, distribute on USB, etc)
 	10am VM: Ubuntu 12.04.2 LTS
