@@ -5,6 +5,6 @@ if [ $(whoami) != "root" ]; then
 	exit
 fi
 
-interface=wlan0
+interface=any
 tcpdump -ttttlnei $interface 'tcp and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)' | tee -a ./sniff &
 ./get_attacks

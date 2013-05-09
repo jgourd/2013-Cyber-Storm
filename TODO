@@ -8,7 +8,6 @@ challenges
 		Semtex levels 0-4->5
 		Krypton levels 0-5->6
 		Natas (all levels)
-	test SCADA challenges
 attacks
 	frontend to grab attacks and visualize them
 	backend to detect attacks
