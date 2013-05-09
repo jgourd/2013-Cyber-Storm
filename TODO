@@ -22,11 +22,9 @@ VMs
 	2pm VM: FreeBSD 9.1-RELEASE
 		goal is to install HTTP, FTP, SSH
 IPs
-	determine whether or not to assign IPs
 	assign initial IPs
 		switches
 		challenge VMs
-		issued VMs
 scoring
 	automate some challenge scoring (e.g., issued VMs)
 Android apps
