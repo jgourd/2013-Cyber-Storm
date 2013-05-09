@@ -3,16 +3,70 @@
 user=cyberstorm
 pass=cyberstorm
 db=cyberstorm
+delay=5
 
 ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM teams ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+names=(`mysql -u$user -p$pass $db -e "SELECT name FROM teams ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 switch_ips=(`mysql -u$user -p$pass $db -e "SELECT switch_ip FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+uplinks=(`mysql -u$user -p$pass $db -e "SELECT uplink_port FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 
 for ((i=0; i<${#switch_ips[@]}; i++)); do
 	id=${ids[$i]}
+	name=${names[$i]}
 	ip=${switch_ips[$i]}
-	echo "Checking $ip..."
-	macs=`(echo cyberstorm; echo cyberstorm; echo show bridge address-table; sleep 1; echo exit) | telnet $ip | awk '/[0-9a-f][0-9a-f]:/ {print $2}'`
-	for mac in $macs; do
-		mysql -u$user -p$pass $db -e "INSERT INTO nodes VALUES(NULL,'$mac',$id,NULL,NULL);"
+	uplink=${uplinks[$i]}
+
+	if [ $ip != "10.0.0.2" ]; then
+		continue
+	fi
+	echo "Checking $ip ($name)..."
+	db_macs=(`mysql -u$user -p$pass $db -e "SELECT mac FROM nodes WHERE team_id=$id AND timestamp_down IS NULL ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+	db_ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM nodes WHERE team_id=$id AND timestamp_down IS NULL ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+	macs=(`(echo cyberstorm; echo cyberstorm; echo terminal datadump; echo show bridge address-table; sleep $delay; echo exit) | telnet $ip | grep -v $uplink | awk '/[0-9a-f][0-9a-f]:/ {print $2}'`)
+
+# for all db_macs that are not in macs, set their timestamp_down
+# for all db_macs that are in macs, remove them from macs
+# what's left in macs should be new nodes
+# for all macs that are not in db_macs, add them to nodes
+	for ((j=0; j<${#db_macs[@]}; j++)); do
+		db_mac=${db_macs[$j]}
+		db_id=${db_ids[$j]}
+		found=0
+#echo checking "$db_mac ($db_id)..."
+
+		for ((k=0; k<${#macs[@]}; k++)); do
+			mac=${macs[$k]}
+#echo " comparing to $mac..."
+
+			if [ "$db_mac" == "$mac" ]; then
+#echo $mac is still up
+				found=1
+				break
+			fi
+		done
+		if [ $found -eq 0 ]; then
+#echo $db_mac needs to be marked as being down
+			mysql -u$user -p$pass $db -e "UPDATE nodes SET timestamp_down=NOW() WHERE id=$db_id;"
+		fi
+	done
+#echo "--------------"
+	for ((j=0; j<${#macs[@]}; j++)); do
+		mac=${macs[$j]}
+		found=0
+#echo checking $mac...
+
+		for ((k=0; k<${#db_macs[@]}; k++)); do
+			db_mac=${db_macs[$k]}
+
+			if [ "$mac" == "$db_mac" ]; then
+#echo $mac is already up
+				found=1
+				break
+			fi
+		done
+		if [ $found -eq 0 ]; then
+#echo $mac needs to be added as a new node
+			mysql -u$user -p$pass $db -e "INSERT INTO nodes VALUES (NULL,'$mac',$id,NULL,NULL);"
+		fi
 	done
 done

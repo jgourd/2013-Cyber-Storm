@@ -417,6 +417,7 @@ CREATE TABLE `teams` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `color` enum('WHITE','BLACK','RED','BLUE','GREEN','YELLOW','PURPLE','ORANGE') NOT NULL,
   `switch_ip` varchar(15) NOT NULL DEFAULT '',
+  `uplink_port` varchar(3) NOT NULL DEFAULT '',
   `sentinel` varchar(250) NOT NULL DEFAULT '',
   `score` smallint(10) NOT NULL DEFAULT '0',
   `challenges` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -431,14 +432,14 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'ARES','RED','10.1.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (2,'CHAOS','BLUE','10.2.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (3,'HERA','GREEN','10.3.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (4,'HERMES','YELLOW','10.4.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (5,'NYX','PURPLE','10.5.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (6,'ZEUS','ORANGE','10.6.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (7,'OLYMPUS','WHITE','10.0.0.2','',0,0,'Y');
-INSERT INTO `teams` VALUES (8,'ARTEMIS','BLACK','10.7.0.2','',0,0,'N');
+INSERT INTO `teams` VALUES (1,'ARES','RED','10.1.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (2,'CHAOS','BLUE','10.2.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (3,'HERA','GREEN','10.3.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (4,'HERMES','YELLOW','10.4.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (5,'NYX','PURPLE','10.5.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (6,'ZEUS','ORANGE','10.6.0.2','','',0,0,'Y');
+INSERT INTO `teams` VALUES (7,'OLYMPUS','WHITE','10.0.0.2','e17','',0,0,'Y');
+INSERT INTO `teams` VALUES (8,'ARTEMIS','BLACK','10.7.0.2','','',0,0,'N');
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 
