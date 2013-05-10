@@ -10,7 +10,7 @@ body
 	position: absolute;
 	width: 99%;
 	height: 98%;
-	border: 1px dotted #202020;
+	border: 1px dotted yellow;
 	z-index: 1000;
 }
 

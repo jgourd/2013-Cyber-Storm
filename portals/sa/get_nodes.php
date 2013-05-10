@@ -3,8 +3,8 @@
 
 	db_connect();
 
-	$num_rows = 4;
-	$num_cols = 9;
+	$num_rows = 6;
+	$num_cols = 15;
 //	$max_nodes = 90;
 //	$max_nodes_white = 217;
 	$nodes = "";

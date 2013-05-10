@@ -5,22 +5,22 @@ Raphael.registerFont({"w":146,"face":{"font-family":"agency fb","font-weight":70
 /************************************************************************************************************************************/
 
 // global screen and canvas settings
-var SCREEN_WIDTH = 1280;//1920;	// laptop is 1280
-var SCREEN_HEIGHT = 800;//1200;	// laptop is 800 or 965
+var SCREEN_WIDTH = 1920;	// laptop is 1280
+var SCREEN_HEIGHT = 1080;	// laptop is 800 or 965
 var TOP_MARGIN = 10;
 var LEFT_MARGIN = 0;
 
 // global SA settings
-var NODE_ROWS = 4;//6;
-var NODE_COLS = 9;//15;
+var NODE_ROWS = 6;
+var NODE_COLS = 15;
 var NODE_SPACING = 30;
 var NODE_RADIUS = 10;
 var ATTACK_NODE_RADIUS = SCREEN_WIDTH * 0.01;
 var ATTACK_NODE_SPACING = ATTACK_NODE_RADIUS * 1.25;
-var ATTACK_REVOLUTIONS = 2;
+var ATTACK_REVOLUTIONS = 15;
 var MAX_NUM_ATTACKS = 15;
 var NUM_TEAMS = 7;
-var REFRESH_RATE = 10000;
+var REFRESH_RATE = 30000;
 
 /************************************************************************************************************************************/
 
@@ -387,7 +387,8 @@ jQuery(document).ready(function()
 			if (visualize)
 //				fetchNodes();
 fetchAttacks();
-		}, REFRESH_RATE);
+		}, 1000);
+		//}, REFRESH_RATE);
 	}
 
 	// TODO: fetch attacks from DB
@@ -415,28 +416,61 @@ fetchAttacks();
 		for (var i=0; i<teams.length; i++)
 			freqs.push(0);
 
-		var max_attacks = (total_nodes_returned >= (MAX_NUM_ATTACKS * 2) ? MAX_NUM_ATTACKS : Math.floor(total_nodes_returned / 2));
+		var max_attacks = (total_nodes_returned >= (MAX_NUM_ATTACKS * 2) ? (Math.random() * MAX_NUM_ATTACKS) : Math.floor(total_nodes_returned / 2));
 		attacks = [];
 		for (var i=0; i<max_attacks; i++)
 		{
 			var src = Math.floor(Math.random() * teams.length);
 			var dst = Math.floor(Math.random() * teams.length);
 
-			while (freqs[src] == nodes[src].length)
+			var ctr = 0;
+			while (freqs[src] == nodes[src].length || ctr < 500)
+			{
 				src = Math.floor(Math.random() * teams.length);
-			while (dst == src || freqs[dst] == nodes[dst].length)
+				ctr++;
+			}
+			if (ctr > 500)
+				break;
+			ctr = 0;
+			while (dst == src || freqs[dst] == nodes[dst].length || ctr < 500)
+			{
 				dst = Math.floor(Math.random() * teams.length);
+				ctr++;
+			}
+			if (ctr > 500)
+				continue;
 			freqs[src]++;
 			freqs[dst]++;
 
 			var src_node = Math.floor(Math.random() * nodes[src].length);
 			var dst_node = Math.floor(Math.random() * nodes[dst].length);
 
-			while (nodes[src][src_node].data("attack"))
+			ctr = 0;
+			while (nodes[src][src_node].data("attack") || ctr < 500)
+			{
 				src_node = Math.floor(Math.random() * nodes[src].length);
+				ctr++;
+			}
+			if (ctr > 500)
+			{
+				freqs[src]--;
+				freqs[dst]--;
+				continue;
+			}
 			nodes[src][src_node].data("attack", true);
-			while (nodes[dst][dst_node].data("attack"))
+			ctr = 0;
+			while (nodes[dst][dst_node].data("attack") || ctr < 500)
+			{
 				dst_node = Math.floor(Math.random() * nodes[dst].length);
+				ctr++;
+			}
+			if (ctr > 500)
+			{
+				freqs[src]--;
+				freqs[dst]--;
+				nodes[src][src_node].data("attack", false);
+				continue;
+			}
 			nodes[dst][dst_node].data("attack", true);
 
 			attacks.push(new Attack(attack_coords[i].x, attack_coords[i].y, nodes[src][src_node], nodes[dst][dst_node]));

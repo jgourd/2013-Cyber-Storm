@@ -1,11 +1,11 @@
 #!/bin/bash
 
-secs=20
+secs=32
 num_teams=7
-max_nodes=36
+max_nodes=90
 
 while ((1)); do
-	max_nodes=36
+	max_nodes=90
 	for ((team_id=1; team_id<=num_teams; team_id++)); do
 		existing_nodes=`mysql -ucyberstorm -pcyberstorm cyberstorm -e "select count(id) from nodes where team_id=$team_id and timestamp_down is null" | tail -n 1`
 		to_remove=0
@@ -13,7 +13,7 @@ while ((1)); do
 			to_remove=$((RANDOM % (existing_nodes + 1)))
 		fi
 		if ((team_id == 7)); then
-			max_nodes=70
+			max_nodes=135
 		fi
 		to_create=$((RANDOM % (max_nodes - (existing_nodes - to_remove))))
 
