@@ -24,7 +24,7 @@ function writeMessage(messageLayer, message) {
 	context.font = '20pt Calibri';
 	context.fillStyle = 'white';
 	context.fillText("Challenge : "+nameList[message.targetNode.id], 10, 25);
-	context.font = '18pt Calibri';
+	context.font = '10pt Calibri';
 	context.fillStyle = 'white';
 	context.fillText("Contract : "+descList[message.targetNode.id], 10, 55);
 	context.font = '18pt Calibri';
@@ -199,7 +199,7 @@ function checkWinners(c_winner,j, node_x, node_y)
 	}
 }
 
-imageObj.src = 'http://i.imgur.com/QoEEqjh.png';
+imageObj.src = './1.jpg';
 
 
       stage.add(messageLayer);

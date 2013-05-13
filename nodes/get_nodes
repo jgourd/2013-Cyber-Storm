@@ -5,8 +5,8 @@ pass=cyberstorm
 db=cyberstorm
 delay=5
 
-ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM teams ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
-names=(`mysql -u$user -p$pass $db -e "SELECT name FROM teams ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
+names=(`mysql -u$user -p$pass $db -e "SELECT name FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 switch_ips=(`mysql -u$user -p$pass $db -e "SELECT switch_ip FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 uplinks=(`mysql -u$user -p$pass $db -e "SELECT uplink_port FROM teams WHERE enabled='Y' ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 
@@ -19,7 +19,7 @@ for ((i=0; i<${#switch_ips[@]}; i++)); do
 	echo "Checking $ip ($name)..."
 	db_macs=(`mysql -u$user -p$pass $db -e "SELECT mac FROM nodes WHERE team_id=$id AND timestamp_down IS NULL ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
 	db_ids=(`mysql -u$user -p$pass $db -e "SELECT id FROM nodes WHERE team_id=$id AND timestamp_down IS NULL ORDER BY id;" | tail -n +2 | tr '\n' ' '`)
-	macs=(`(echo cyberstorm; echo cyberstorm; echo terminal datadump; echo show bridge address-table; sleep $delay; echo exit) | telnet $ip | grep -v $uplink | awk '/[0-9a-f][0-9a-f]:/ {print $2}'`)
+	macs=(`(echo cyberstorm; echo 5ph1nct3r; echo terminal datadump; echo show bridge address-table; sleep $delay; echo exit) | telnet $ip | grep -v $uplink | awk '/[0-9a-f][0-9a-f]:[0-9a-f][0-9a-f]:[0-9a-f][0-9a-f]:[0-9a-f][0-9a-f]:[0-9a-f][0-9a-f]:[0-9a-f][0-9a-f]/ {print $2}'`)
 
 # for all db_macs that are not in macs, set their timestamp_down
 # for all db_macs that are in macs, remove them from macs

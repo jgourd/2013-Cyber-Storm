@@ -236,8 +236,8 @@
 							$r3 = db_query("SELECT points FROM challenges WHERE id=$id");
 							$c = $c + mysql_result($r3, 0, "points");
 							$r3 = db_query("UPDATE teams set score=$c WHERE id=$winner_id");
-							$r4 = db_query("INSERT INTO log VALUES (NULL,'Challenge ended: $challenge_name (winner: $team_name)',NULL)");
-							$r5 = db_query("INSERT INTO announcements VALUES (NULL, '$team_name wins challenge: $challenge_name!', NULL, 30)");
+							$r4 = db_query("INSERT INTO log VALUES (NULL,'Challenge ended: " . str_replace("'", "''", $challenge_name) . " (winner: $team_name)',NULL)");
+							$r5 = db_query("INSERT INTO announcements VALUES (NULL, '$team_name wins challenge: " . str_replace("'", "''", $challenge_name) . "!', NULL, 30)");
 							if ($r && $r2 && $r3 && $r4 && $r5)
 								echo "\t\tChallenge closed successfully.<p/>\n";
 							else
