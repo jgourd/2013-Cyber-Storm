@@ -1,0 +1,41 @@
+make android apps have input to specify server ip
+pre-install android apps or have a mechanism to install apks ready
+host challenges like vortex with automated scoring via a token server that accepts ssh passwords (or similar)
+automated scoring of vms
+long ethernet cable for wired ethernet
+long audio cables for music
+sstv
+timelock
+black box vms
+malconfigured vms
+class discussion and labs on setting up and securing host os then vms with how to get networking up in vm
+find out if routing works across interfaces in router with a class a subnet
+improve challenge matrix
+attack detection
+fix kmm issues
+better counts on food and drinks
+dedicated machine for music (maybe hackable)
+dedicated machine for viz display on lcds
+wireless to hack
+wireless with internet
+wireless just internal
+separate server for android apps that need it
+ensure chanops can get in any channel on irc
+repeat announcements
+automated way to scale scores
+way to allocate challenge points to multiple teams
+way to alter challenge points or info
+way to view past announcements or better way to view past challenges
+
+CSC442
+good: challenges, never stopped, always busy, Android, DF, layout teams, team size
+bad: KMMs, 1 Android challenge at a time, intelrocking challenges, if so release info after solved, less unplugging/social engineering, too much Android/interlocking
+Internet to racks
+Cyber Storm like prep day
+sound when annoucements
+split switches for Internet
+DF in class
+purchasable posters
+
+CSC122
+
